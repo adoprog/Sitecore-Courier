@@ -23,3 +23,44 @@ After you deploy the initial version of your website, you should:
 
 Additional information on the project is available in this blog post: [Sitecore Courier - Effortless Packaging](http://sitecoresnippets.blogspot.com/2012/10/sitecore-courier-effortless-packaging.html)
 
+**Important**
+
+After you install the package add the following to the configSections section of web.config:
+
+```xml
+    <section name="sitecorediff" type="Sitecore.Update.Configuration.ConfigReader, Sitecore.Update"/>
+```
+
+and the following to the &lt;configuration&gt; section (right above &lt;sitecore database="SqlServer"&gt;)
+
+```xml
+  <sitecorediff>
+    <commandfilters>
+      <filter id="changedFieldsFilter" mode="on" type="Sitecore.Update.Commands.Filters.ChangedFieldsFilter, Sitecore.Update">
+        <fields hint="list">
+          <field>__Created</field>
+          <field>{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}</field>
+          <field>__Revision</field>
+          <field>__Updated</field>
+          <field>__Updated by</field>
+        </fields>
+      </filter>
+    </commandfilters>
+    <dataproviders>
+      <dataprovider id="filesystemmain" type="Sitecore.Update.Data.Providers.FileSystemProvider, Sitecore.Update">
+        <param>$(id)</param>
+      </dataprovider>
+      <dataprovider id="snapshotprovider" type="Sitecore.Update.Data.Providers.SnapShotProvider, Sitecore.Update">
+        <param>$(id)</param>
+      </dataprovider>
+    </dataproviders>
+
+    <source type="Sitecore.Update.Data.DataManager, Sitecore.Update">
+      <param>source</param>
+    </source>
+
+    <target type="Sitecore.Update.Data.DataManager, Sitecore.Update">
+      <param>target</param>
+    </target>
+  </sitecorediff>
+```
