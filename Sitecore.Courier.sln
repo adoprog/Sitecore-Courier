@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Courier", "Sitecore.Courier\Sitecore.Courier.csproj", "{4745FF1F-4D3F-4FD6-984B-667AF2258774}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Courier.Runner", "Sitecore.Courier.Runner\Sitecore.Courier.Runner.csproj", "{58FE90BC-2D87-473F-8A90-2FE4DF5EA393}"
@@ -8,21 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Courier.WebRunner", "Sitecore.Courier.WebRunner\Sitecore.Courier.WebRunner.csproj", "{6E7C730A-1D5A-4B13-BD58-BE78183EA863}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs29
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Sitecore.Courier.Runner\\Sitecore.Courier.Runner.csproj
-		SccProjectName1 = Sitecore.Courier.Runner
-		SccLocalPath1 = Sitecore.Courier.Runner
-		SccProjectUniqueName2 = Sitecore.Courier.WebRunner\\Sitecore.Courier.WebRunner.csproj
-		SccProjectName2 = Sitecore.Courier.WebRunner
-		SccLocalPath2 = Sitecore.Courier.WebRunner
-		SccProjectUniqueName3 = Sitecore.Courier\\Sitecore.Courier.csproj
-		SccProjectName3 = Sitecore.Courier
-		SccLocalPath3 = Sitecore.Courier
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
