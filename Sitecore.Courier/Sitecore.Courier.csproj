@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Sitecore.Update.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Zip">
+      <HintPath>lib\Sitecore.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

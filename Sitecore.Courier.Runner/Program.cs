@@ -47,7 +47,8 @@
         }
       }
 
-      return null;
+      Console.WriteLine("Enter the path to " + name + " folder: ");
+      return Console.ReadLine();
     }
 
     public static string GetFormattedArgumentName(string name)
