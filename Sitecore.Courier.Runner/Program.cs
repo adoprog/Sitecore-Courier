@@ -15,7 +15,7 @@
     /// Mains the specified args.
     /// </summary>
     /// <param name="args">The arguments.</param>
-    private static void Main(string[] args)
+    public static void Main(string[] args)
     {
       for (int i = 0; i < args.Length; i++)
       {
@@ -35,6 +35,12 @@
       PackageGenerator.GeneratePackage(diff, string.Empty, outputPath);
     }
 
+    /// <summary>
+    /// Gets the argument.
+    /// </summary>
+    /// <param name="name">The name.</param>
+    /// <param name="args">The arguments.</param>
+    /// <returns></returns>
     public static string GetArgument(string name, string[] args)
     {
       string argument = GetFormattedArgumentName(name);
@@ -47,10 +53,15 @@
         }
       }
 
-      Console.WriteLine("Enter the path to " + name + " folder: ");
+      Console.WriteLine("Enter the path to " + name + " folder/file: ");
       return Console.ReadLine();
     }
 
+    /// <summary>
+    /// Gets the name of the formatted argument.
+    /// </summary>
+    /// <param name="name">The name.</param>
+    /// <returns></returns>
     public static string GetFormattedArgumentName(string name)
     {
       return string.Format("/{0}:", name.ToLowerInvariant());
