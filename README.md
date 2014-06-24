@@ -3,7 +3,7 @@ Sitecore-Courier
 
 ![alt text](http://s15.postimage.org/ccekm5nif/user4919_pic11858_1270227074.jpg?noCache=1349180768)
 
-Sitecore Courier aims to fill the gap between the development and production environments when building websites with Sitecore CMS.
+Sitecore Courier aims to fill the gap between the development and production environments when building websites with Sitecore CMS. You can download it here: https://bit.ly/SitecoreCourier (now also includes Console Runner).
 
 It lets you build Sitecore Update packages automatically, by analyzing serialized Sitecore items and packaging only changed items.
 
