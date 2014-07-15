@@ -67,8 +67,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ItemUtils.cs" />
     <Compile Include="DIffGenerator.cs" />
     <Compile Include="FileCommandsFilter.cs" />
+    <Compile Include="FileSystemProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -10,14 +10,6 @@
   /// </summary>
   public class DiffGenerator
   {
-    /// <summary>
-    /// Gets the diff.
-    /// </summary>
-    /// <param name="sourcePath">The source path.</param>
-    /// <param name="targetPath">The target path.</param>
-    /// <returns>
-    /// The diff.
-    /// </returns>
     public static List<ICommand> GetDiffCommands(string sourcePath, string targetPath)
     {
       var targetManager = Factory.Instance.GetSourceDataManager();
@@ -25,6 +17,7 @@
 
       sourceManager.SerializationPath = sourcePath;
       targetManager.SerializationPath = targetPath;
+
       IDataIterator sourceDataIterator = sourceManager.ItemIterator;
       IDataIterator targetDataIterator = targetManager.ItemIterator;
 

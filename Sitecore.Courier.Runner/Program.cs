@@ -1,10 +1,8 @@
 ﻿namespace Sitecore.Courier.Runner
 {
-  using System;
-  using System.Collections.Generic;
-
   using Sitecore.Update;
   using Sitecore.Update.Engine;
+  using System;
 
   /// <summary>
   /// Defines the program class.
@@ -26,12 +24,13 @@
       string sourcePath = GetArgument("source", args);
       string targetPath = GetArgument("target", args);
       string outputPath = GetArgument("output", args);
-      
+
       var diff = new DiffInfo(
-        DiffGenerator.GetDiffCommands(sourcePath, targetPath),
-        "Sitecore Courier Package",
-        string.Empty,
-        string.Format("Diff between folders '{0}' and '{1}'", sourcePath, targetPath));
+       DiffGenerator.GetDiffCommands(sourcePath, targetPath),
+       "Sitecore Courier Package",
+       string.Empty,
+       string.Format("Diff between serialization folders '{0}' and '{1}'.", sourcePath, targetPath));
+
       PackageGenerator.GeneratePackage(diff, string.Empty, outputPath);
     }
 
