@@ -29,6 +29,10 @@
 
                 PackageGenerator.GeneratePackage(diff, string.Empty, options.Output);
             }
+            else
+            {
+                Console.WriteLine(options.GetUsage());
+            }
         }
     }
 }
