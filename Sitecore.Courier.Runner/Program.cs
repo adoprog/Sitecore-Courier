@@ -1,69 +1,46 @@
 ﻿namespace Sitecore.Courier.Runner
 {
-  using Sitecore.Update;
-  using Sitecore.Update.Engine;
-  using System;
-
-  /// <summary>
-  /// Defines the program class.
-  /// </summary>
-  internal class Program
-  {
-    /// <summary>
-    /// Mains the specified args.
-    /// </summary>
-    /// <param name="args">The arguments.</param>
-    public static void Main(string[] args)
-    {
-      for (int i = 0; i < args.Length; i++)
-      {
-        string s = args[i];
-        Console.WriteLine("\t" + s);
-      }
-
-      string sourcePath = GetArgument("source", args);
-      string targetPath = GetArgument("target", args);
-      string outputPath = GetArgument("output", args);
-
-      var diff = new DiffInfo(
-       DiffGenerator.GetDiffCommands(sourcePath, targetPath),
-       "Sitecore Courier Package",
-       string.Empty,
-       string.Format("Diff between serialization folders '{0}' and '{1}'.", sourcePath, targetPath));
-
-      PackageGenerator.GeneratePackage(diff, string.Empty, outputPath);
-    }
+    using Sitecore.Update;
+    using Sitecore.Update.Engine;
+    using System;
 
     /// <summary>
-    /// Gets the argument.
+    /// Defines the program class.
     /// </summary>
-    /// <param name="name">The name.</param>
-    /// <param name="args">The arguments.</param>
-    /// <returns></returns>
-    public static string GetArgument(string name, string[] args)
+    internal class Program
     {
-      string argument = GetFormattedArgumentName(name);
-      for (int i = 0; i < args.Length; i++)
-      {
-        string param = args[i];
-        if (param.Trim().ToLowerInvariant().StartsWith(argument))
+        /// <summary>
+        /// Mains the specified args.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        public static void Main(string[] args)
         {
-          return param.Substring(argument.Length).Trim();
+            var options = new Options();
+            if (CommandLine.Parser.Default.ParseArguments(args, options))
+            {
+                if (options.Source.StartsWith(":"))
+                    options.Source = options.Source.Substring(1);
+
+                if (options.Target.StartsWith(":"))
+                    options.Target = options.Target.Substring(1);
+
+                if (options.Output.StartsWith(":"))
+                    options.Output = options.Output.Substring(1);
+                Console.WriteLine("Source: {0}", options.Source);
+                Console.WriteLine("Target: {0}", options.Target);
+                Console.WriteLine("Output: {0}", options.Output);
+                var diff = new DiffInfo(
+                    DiffGenerator.GetDiffCommands(options.Source, options.Target),
+                    "Sitecore Courier Package",
+                    string.Empty,
+                    string.Format("Diff between serialization folders '{0}' and '{1}'.", options.Source, options.Target));
+
+                PackageGenerator.GeneratePackage(diff, string.Empty, options.Output);
+            }
+            else
+            {
+                Console.WriteLine(options.GetUsage());
+            }
         }
-      }
-
-      Console.WriteLine("Enter the path to " + name + " folder/file: ");
-      return Console.ReadLine();
     }
-
-    /// <summary>
-    /// Gets the name of the formatted argument.
-    /// </summary>
-    /// <param name="name">The name.</param>
-    /// <returns></returns>
-    public static string GetFormattedArgumentName(string name)
-    {
-      return string.Format("/{0}:", name.ToLowerInvariant());
-    }
-  }
 }
