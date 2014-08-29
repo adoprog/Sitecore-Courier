@@ -18,6 +18,14 @@ After you deploy the initial version of your website, you should:
 3. Keep doing changes in TRUNK, serialize changed items, commit them, etc.
 4. And packages will be generated automatically, by comparing serialization from TAG (source) to the TRUNK (target). Incremental package will contain only changed items.
 
+## Using console runner at your build server:
+
+Sitecore.Courier.Runner.exe -s C:\Source -t C:\Target -o C:\Package.update
+
+-s - Source folder
+-t - Target folder
+-o - Output package (will be created)
+
 ![alt text](http://2.bp.blogspot.com/-B5KLMs5DgNg/UGry9eD7mgI/AAAAAAAAATM/GpMaEvweH8M/s1600/webrunner.jpg)
 
 
