@@ -20,11 +20,14 @@ After you deploy the initial version of your website, you should:
 
 ## Using console runner at your build server
 
-Sitecore.Courier.Runner.exe -s C:\Source -t C:\Target -o C:\Package.update
+*Sitecore.Courier.Runner.exe* -s C:\Source -t C:\Target -o C:\Package.update
 
 -s - Source folder
+
 -t - Target folder
+
 -o - Output package (will be created)
+
 
 ## Using web version for preview
 
