@@ -18,14 +18,6 @@
             var options = new Options();
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
-                if (options.Source.StartsWith(":"))
-                    options.Source = options.Source.Substring(1);
-
-                if (options.Target.StartsWith(":"))
-                    options.Target = options.Target.Substring(1);
-
-                if (options.Output.StartsWith(":"))
-                    options.Output = options.Output.Substring(1);
                 Console.WriteLine("Source: {0}", options.Source);
                 Console.WriteLine("Target: {0}", options.Target);
                 Console.WriteLine("Output: {0}", options.Output);
