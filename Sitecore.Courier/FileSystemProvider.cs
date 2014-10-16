@@ -173,7 +173,17 @@
           }
           if (this.position >= this.dataPairs.Length)
             return (IDataItem)null;
-          FileSystemProvider.FileSystemDataIterator.DataPair dataPair = this.dataPairs[this.position++];
+          FileSystemProvider.FileSystemDataIterator.DataPair dataPair = this.dataPairs[this.position];
+          
+          /* After we return our DataItem and it's actually read from the File System, its size might become pretty high. For instance if our *.item takes 200MB, DataItem object size might be over 400MB.
+           * If DataItem is not used more (e.g. by AddCommand), GC is free to collect it. However our dataPairs collection root prevents object from being collected.
+           * As result the Couirer tool memory usage might be pretty high.
+           * Given that we don't get back to the this.dataPairs[position] struct more, we could safely clean it.
+           * 
+           * Local test demostrated that if DIFF package contains nothing (no commands are present), peak memory usage is reduced from 10GB to 2GB (on local test input).*/
+          this.dataPairs[this.position] = new FileSystemProvider.FileSystemDataIterator.DataPair();
+          this.position++;
+
           if (Directory.Exists(dataPair.Info.FullName))
           {
             this.stack.Push(new FileSystemProvider.FileSystemDataIterator(this.root, dataPair.Info.FullName, this.Filters));
