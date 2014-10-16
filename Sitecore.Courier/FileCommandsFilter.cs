@@ -36,6 +36,14 @@ namespace Sitecore.Courier
     /// <returns>The filtered command.</returns>
     public ICommand FilterCommand(ICommand command)
     {
+      if (command == null)
+        return null;
+
+      if (ForceOverwrites)
+      {
+          command.CollisionBehavior = CollisionBehavior.Force;
+      }
+
       if (!(command is AddFolderCommand) && !(command is AddFileCommand))
       {
         return command;
@@ -44,11 +52,6 @@ namespace Sitecore.Courier
       if (this.excludedFolders.Any(folder => command.EntityPath.Replace("\\", string.Empty).StartsWith(folder)))
       {
         return null;
-      }
-
-      if (ForceOverwrites)
-      {
-          command.CollisionBehavior = CollisionBehavior.Force;
       }
 
       return command;
