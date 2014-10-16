@@ -1,4 +1,6 @@
-﻿namespace Sitecore.Courier
+﻿using Sitecore.Update;
+
+namespace Sitecore.Courier
 {
   using System.Collections.Generic;
   using System.Linq;
@@ -11,12 +13,20 @@
   /// </summary>
   public class FileCommandsFilter : ICommandFilter
   {
-    private readonly List<string> excludedFolders = new List<string>();
+    private List<string> excludedFolders = new List<string>();
+    private bool forceoverwrites = false;
 
     public FileCommandsFilter()
     {
       excludedFolders.Add("serialization");
       excludedFolders.Add("data");
+    }
+
+    public List<string> ExcludedFolders { get { return excludedFolders; } set { excludedFolders = value; } }
+    public bool ForceOverwrites
+    {
+        get { return forceoverwrites; }
+        set { forceoverwrites = value; }
     }
 
     /// <summary>
@@ -36,6 +46,11 @@
         return null;
       }
 
+      if (ForceOverwrites)
+      {
+          command.CollisionBehavior = CollisionBehavior.Force;
+      }
+
       return command;
     }
 
@@ -47,7 +62,12 @@
     /// </returns>
     public ICommandFilter Clone()
     {
-      return new FileCommandsFilter();
+        return new FileCommandsFilter()
+        {
+            ForceOverwrites = this.ForceOverwrites,
+            ExcludedFolders = excludedFolders
+        };
     }
+
   }
 }
