@@ -234,13 +234,13 @@
                   }
                   if (directoryInfo2 != null)
                   {
-                    IDataItem dataItem = (IDataItem)new ContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
+                    IDataItem dataItem = (IDataItem)new QuickContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
                     if (this.IsAllowed(dataItem))
                       list1.Add(new FileSystemProvider.FileSystemDataIterator.DataPair((FileSystemInfo)directoryInfo2, dataItem));
                   }
                   else
                   {
-                    IDataItem dataItem = (IDataItem)new ContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
+                    IDataItem dataItem = (IDataItem)new QuickContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
                     if (this.IsAllowed(dataItem))
                       list1.Add(new FileSystemProvider.FileSystemDataIterator.DataPair((FileSystemInfo)file, dataItem));
                   }
