@@ -1,4 +1,8 @@
-﻿namespace Sitecore.Courier
+﻿using System.Diagnostics;
+using System.Linq;
+using Sitecore.Update.Commands;
+
+namespace Sitecore.Courier
 {
   using System.Collections.Generic;
   using Sitecore.Update.Configuration;
@@ -25,6 +29,25 @@
 
       var commands = new List<ICommand>();
       commands.AddRange(GenerateDiff(sourceDataIterator, targetDataIterator));
+        //if an item is found to be deleted AND added, we can be sure it's a move
+      var deleteCommands = commands.OfType<DeleteItemCommand>();
+      var shouldBeUpdateCommands =
+          commands.OfType<AddItemCommand>()
+              .Select(a => new
+              {
+                  Added = a,
+                  Deleted = deleteCommands.FirstOrDefault(d => d.ItemID == a.ItemID)
+              }).Where(u => u.Deleted != null).ToList();
+      foreach (var command in shouldBeUpdateCommands)
+      {
+          commands.AddRange(command.Deleted.GenerateUpdateCommand(command.Added));
+          commands.Remove(command.Added);
+          commands.Remove(command.Deleted);
+          //now, this one is an assumption, but would go wrong without the assumption anyway: this assumption is in fact safer
+          //if the itempath of a delete command starts with this delete command, it will be moved along to the new node, not deleted, just leave it alone
+          commands.RemoveAll(c => c is DeleteItemCommand && ((DeleteItemCommand)c).ItemPath.StartsWith(command.Deleted.ItemPath));
+      }
+
       engine.ProcessCommands(ref commands);
       return commands;
     }
