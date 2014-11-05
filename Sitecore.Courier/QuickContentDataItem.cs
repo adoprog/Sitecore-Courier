@@ -44,7 +44,7 @@ namespace Sitecore.Courier
             Assert.IsTrue(dataItem is ContentDataItem, "Incorrect item type. Probably problem with engine");
             var target = dataItem as ContentDataItem;
             Assert.IsNotNull(target, "DataItem");
-            if (CompareTo(target) != 0)
+            if (CompareIds(target) != 0)
             {
                 list.AddRange(this.GenerateDeleteCommand());
                 list.AddRange(target.GenerateAddCommand());
@@ -60,16 +60,21 @@ namespace Sitecore.Courier
 
         public override int CompareTo(object obj)
         {
-            var isEqual = DataItemCompareTo(obj);
-            if (isEqual == 0 && obj is QuickContentDataItem)
+            var isEqual = CompareIds(obj);
+            return isEqual == 0 ? DataItemCompareTo(obj) : isEqual;
+        }
+
+        public virtual int CompareIds(object obj)
+        {
+            if (obj is QuickContentDataItem)
             {
                 return GetFastId().CompareTo(((QuickContentDataItem)obj).GetFastId());
             }
-            else if (isEqual == 0 && obj is ContentDataItem)
+            else if (obj is ContentDataItem)
             {
                 return this.ItemID.CompareTo((obj as ContentDataItem).ItemID);
             }
-            return isEqual;
+            return 0;
         }
 
         private Guid GetFastId()
