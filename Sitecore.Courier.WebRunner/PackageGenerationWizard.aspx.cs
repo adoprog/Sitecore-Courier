@@ -39,21 +39,23 @@
       
       foreach (var command in result)
       {
-        var item = new ListItem(command.EntityPath.Substring(0, command.EntityPath.IndexOf("{", System.StringComparison.Ordinal) - 1), command.EntityID);
         if (command.CommandPrefix == "addeditems")
         {
+          var item = new ListItem(command.EntityPath.Substring(0, command.EntityPath.IndexOf("{", System.StringComparison.Ordinal) - 1), command.EntityID);
           item.Selected = true;
           this.Added.Items.Add(item);
         }
 
         if (command.CommandPrefix == "changeditems")
         {
+          var item = new ListItem(command.EntityPath.Substring(0, command.EntityPath.IndexOf("{", System.StringComparison.Ordinal) - 1), command.EntityID);
           item.Selected = true;
           this.Changed.Items.Add(item);
         }
 
         if (command.CommandPrefix == "deleteditems")
         {
+          var item = new ListItem(command.EntityPath.Substring(0, command.EntityPath.IndexOf("{", System.StringComparison.Ordinal) - 1), command.EntityID);
           item.Selected = true;
           this.Deleted.Items.Add(item);
         }
