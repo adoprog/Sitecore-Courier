@@ -74,6 +74,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Courier.ShellExtensions\Sitecore.Courier.ShellExtensions.csproj">
+      <Project>{c6d6ea4f-3536-4c13-8dad-c9c0c6d02ee3}</Project>
+      <Name>Sitecore.Courier.ShellExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Courier\Sitecore.Courier.csproj">
       <Project>{4745FF1F-4D3F-4FD6-984B-667AF2258774}</Project>
       <Name>Sitecore.Courier</Name>
@@ -90,8 +94,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call "$(VS110COMNTOOLS)..\..\vc\vcvarsall.bat" x86
-"$(VS110COMNTOOLS)..\..\vc\bin\EditBin.exe" "$(TargetPath)"  /LARGEADDRESSAWARE</PostBuildEvent>
+    <PostBuildEvent>call "$(DevEnvDir)..\..\vc\vcvarsall.bat" x86
+"$(DevEnvDir)..\..\vc\bin\EditBin.exe" "$(TargetPath)"  /LARGEADDRESSAWARE</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
