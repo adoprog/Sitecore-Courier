@@ -20,6 +20,13 @@ After you deploy the initial version of your website, you should:
 3. Keep doing changes in TRUNK, serialize changed items, commit them, etc.
 4. And packages will be generated automatically, by comparing serialization from TAG (source) to the TRUNK (target). Incremental package will contain only changed items.
 
+## Using Windows shell extension
+
+Sitecore Courier can now be installed via Chocolatey: https://chocolatey.org/packages/sitecore-courier
+After it is installed, just put all your items and files into a single folder, and right-click on it to create a package
+
+![alt text](http://3.bp.blogspot.com/-voh_5SsBcyk/VKEV_I0OpyI/AAAAAAAACb0/K1ptEj0iNQk/s1600/courier.png)
+
 ## Using console runner at your build server
 
 *Sitecore.Courier.Runner.exe* -s C:\Source -t C:\Target -o C:\Package.update
@@ -31,7 +38,7 @@ After you deploy the initial version of your website, you should:
 -o - Output package (will be created)
 
 
-## Using web version for preview
+## (Deprecated) Using web version for preview
 
 ![alt text](http://2.bp.blogspot.com/-B5KLMs5DgNg/UGry9eD7mgI/AAAAAAAAATM/GpMaEvweH8M/s1600/webrunner.jpg)
 
