@@ -43,6 +43,10 @@ namespace Sitecore.Courier
       {
           command.CollisionBehavior = CollisionBehavior.Force;
       }
+      else
+      {
+          command.CollisionBehavior = CollisionBehavior.Skip;
+      }
 
       if (!(command is AddFolderCommand) && !(command is AddFileCommand))
       {
