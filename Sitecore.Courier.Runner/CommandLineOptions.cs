@@ -3,6 +3,8 @@ using CommandLine.Text;
 
 namespace Sitecore.Courier.Runner
 {
+    using Sitecore.Update;
+
     // Define a class to receive parsed values
     class Options
     {
@@ -17,6 +19,10 @@ namespace Sitecore.Courier.Runner
         [Option('o', "output", Required = true,
           HelpText = "Location of update package")]
         public string Output { get; set; }
+        
+        [Option('c', "collisionBehavior", Required = false, DefaultValue = CollisionBehavior.Undefined,
+          HelpText = "The collision behavior (default, force or skip) for the update package.")]
+        public CollisionBehavior CollisionBehavior { get; set; }
 
         [ParserState]
         public IParserState LastParserState { get; set; }
