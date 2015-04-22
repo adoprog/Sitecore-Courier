@@ -21,8 +21,9 @@
                 Console.WriteLine("Source: {0}", options.Source);
                 Console.WriteLine("Target: {0}", options.Target);
                 Console.WriteLine("Output: {0}", options.Output);
+                Console.WriteLine("Collision behavior: {0}", options.CollisionBehavior);
                 var diff = new DiffInfo(
-                    DiffGenerator.GetDiffCommands(options.Source, options.Target),
+                    DiffGenerator.GetDiffCommands(options.Source, options.Target, options.CollisionBehavior),
                     "Sitecore Courier Package",
                     string.Empty,
                     string.Format("Diff between serialization folders '{0}' and '{1}'.", options.Source, options.Target));

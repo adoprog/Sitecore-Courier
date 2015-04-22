@@ -23,11 +23,6 @@ namespace Sitecore.Courier
     }
 
     public List<string> ExcludedFolders { get { return excludedFolders; } set { excludedFolders = value; } }
-    public bool ForceOverwrites
-    {
-        get { return forceoverwrites; }
-        set { forceoverwrites = value; }
-    }
 
     /// <summary>
     /// Filters the command. 
@@ -38,12 +33,7 @@ namespace Sitecore.Courier
     {
       if (command == null)
         return null;
-
-      if (ForceOverwrites)
-      {
-          command.CollisionBehavior = CollisionBehavior.Force;
-      }
-
+        
       if (!(command is AddFolderCommand) && !(command is AddFileCommand))
       {
         return command;
@@ -67,7 +57,6 @@ namespace Sitecore.Courier
     {
         return new FileCommandsFilter()
         {
-            ForceOverwrites = this.ForceOverwrites,
             ExcludedFolders = excludedFolders
         };
     }
