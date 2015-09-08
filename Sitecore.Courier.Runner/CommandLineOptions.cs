@@ -18,6 +18,10 @@ namespace Sitecore.Courier.Runner
           HelpText = "Location of update package")]
         public string Output { get; set; }
 
+        [Option('c', "Build Configuration", Required = false,
+            HelpText = "Build Configuration to diff")]
+        public string Configuration { get; set; }
+
         [ParserState]
         public IParserState LastParserState { get; set; }
 
