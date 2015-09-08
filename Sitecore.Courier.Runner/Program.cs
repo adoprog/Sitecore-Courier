@@ -1,8 +1,11 @@
-﻿namespace Sitecore.Courier.Runner
+﻿using Sitecore.Shell.Applications.ContentEditor;
+
+namespace Sitecore.Courier.Runner
 {
     using Sitecore.Update;
     using Sitecore.Update.Engine;
     using System;
+    using System.IO;
 
     /// <summary>
     /// Defines the program class.
@@ -29,6 +32,10 @@
                     throw new Exception("ScProjectFilePath is required if Build Configuration is provided.");
                 }
 
+                if (!File.Exists(options.ScProjFilePath))
+                {
+                    throw new Exception(string.Format("Project file path {0} does not exist.", options.ScProjFilePath));
+                }
 
 
                 var diff = new DiffInfo(
