@@ -22,6 +22,10 @@ namespace Sitecore.Courier.Runner
             HelpText = "Build Configuration to diff")]
         public string Configuration { get; set; }
 
+        [Option('p', "Path to Sitecore Project File", Required = false,
+          HelpText = "Path to sitecore project file if excluding for build configuration")]
+        public string ScProjFilePath { get; set; }
+
         [ParserState]
         public IParserState LastParserState { get; set; }
 

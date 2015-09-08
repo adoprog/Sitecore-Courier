@@ -22,6 +22,15 @@
                 Console.WriteLine("Target: {0}", options.Target);
                 Console.WriteLine("Output: {0}", options.Output);
                 Console.WriteLine("Configuration: {0}", options.Configuration);
+                Console.WriteLine("Path to project file: {0}", options.ScProjFilePath);
+
+                if (!string.IsNullOrEmpty(options.Configuration) && string.IsNullOrEmpty(options.ScProjFilePath))
+                {
+                    throw new Exception("ScProjectFilePath is required if Build Configuration is provided.");
+                }
+
+
+
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target),
                     "Sitecore Courier Package",
