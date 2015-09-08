@@ -21,6 +21,7 @@
                 Console.WriteLine("Source: {0}", options.Source);
                 Console.WriteLine("Target: {0}", options.Target);
                 Console.WriteLine("Output: {0}", options.Output);
+                Console.WriteLine("Configuration: {0}", options.Configuration);
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target),
                     "Sitecore Courier Package",
