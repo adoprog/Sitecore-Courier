@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Sitecore.Courier.Runner
 {
@@ -12,6 +13,14 @@ namespace Sitecore.Courier.Runner
         public static List<string> GetExcludedItems(string projectFilePath, string buildConfiguration)
         {
             var excludedItems = new List<string>();
+
+            var reader = XmlReader.Create(projectFilePath);
+            reader.MoveToContent();
+            while (reader.Read())
+            {
+                // do stuff
+
+            }
 
 
             return excludedItems;

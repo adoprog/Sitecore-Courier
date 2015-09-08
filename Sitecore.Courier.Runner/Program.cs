@@ -37,6 +37,7 @@ namespace Sitecore.Courier.Runner
                     throw new Exception(string.Format("Project file path {0} does not exist.", options.ScProjFilePath));
                 }
 
+                var exclusions = ExclusionReader.GetExcludedItems(options.ScProjFilePath, options.Configuration);
 
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target),
