@@ -27,20 +27,13 @@ namespace Sitecore.Courier.Runner
                 Console.WriteLine("Configuration: {0}", options.Configuration);
                 Console.WriteLine("Path to project file: {0}", options.ScProjFilePath);
 
-                if (!string.IsNullOrEmpty(options.Configuration) && string.IsNullOrEmpty(options.ScProjFilePath))
+                if (ExclusionValidator.HasValidExclusions(options.Configuration, options.ScProjFilePath))
                 {
-                    throw new Exception("ScProjectFilePath is required if Build Configuration is provided.");
+                    var exclusions = ExclusionReader.GetExcludedItems(options.ScProjFilePath, options.Configuration);
+
+                    ExclusionProcessor.RemoveExcludedItems(options.Source, exclusions);
+                    ExclusionProcessor.RemoveExcludedItems(options.Target, exclusions);
                 }
-
-                if (!File.Exists(options.ScProjFilePath))
-                {
-                    throw new Exception(string.Format("Project file path {0} does not exist.", options.ScProjFilePath));
-                }
-
-                var exclusions = ExclusionReader.GetExcludedItems(options.ScProjFilePath, options.Configuration);
-
-                ExclusionProcessor.RemoveExcludedItems(options.Source, exclusions);
-                ExclusionProcessor.RemoveExcludedItems(options.Target, exclusions);
 
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target),

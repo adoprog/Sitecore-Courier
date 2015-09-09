@@ -6,26 +6,27 @@ namespace Sitecore.Courier.Runner
     // Reads the scproj file for excludedfiles and returns them for processing.
     public static class ExclusionReader
     {
-        public static List<string> GetExcludedItems(string projectFilePath, string buildConfiguration)
-        
+        public static List<string> GetExcludedItems(string projectFilePath, string buildConfiguration)        
         {
             var excludedItems = new List<string>();
             var xmldocument = new XmlDocument();
             xmldocument.Load(projectFilePath);
-            var reader = XmlReader.Create(projectFilePath);
-            reader.MoveToContent();
-            while (reader.Read())
+            using (var reader = XmlReader.Create(projectFilePath))
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name == "SitecoreItem")
+                reader.MoveToContent();
+                while (reader.Read())
                 {
-                    var node = xmldocument.ReadNode(reader);
-                    foreach (XmlNode child in node.ChildNodes)
+                    if (reader.NodeType == XmlNodeType.Element && reader.Name == "SitecoreItem")
                     {
-                        if (child.NodeType == XmlNodeType.Element && child.Name == "ExcludeItemFrom" &&
-                            child.InnerText == buildConfiguration)
+                        var node = xmldocument.ReadNode(reader);
+                        foreach (XmlNode child in node.ChildNodes)
                         {
-                            var path = node.Attributes[0].Value;
-                            excludedItems.Add(path);
+                            if (child.NodeType == XmlNodeType.Element && child.Name == "ExcludeItemFrom" &&
+                                child.InnerText == buildConfiguration)
+                            {
+                                var path = node.Attributes[0].Value;
+                                excludedItems.Add(path);
+                            }
                         }
                     }
                 }

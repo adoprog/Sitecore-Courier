@@ -72,6 +72,7 @@
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="ExclusionProcessor.cs" />
     <Compile Include="ExclusionReader.cs" />
+    <Compile Include="ExclusionValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
