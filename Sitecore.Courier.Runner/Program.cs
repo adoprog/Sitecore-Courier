@@ -39,6 +39,9 @@ namespace Sitecore.Courier.Runner
 
                 var exclusions = ExclusionReader.GetExcludedItems(options.ScProjFilePath, options.Configuration);
 
+                ExclusionProcessor.RemoveExcludedItems(options.Source, exclusions);
+                ExclusionProcessor.RemoveExcludedItems(options.Target, exclusions);
+
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target),
                     "Sitecore Courier Package",
