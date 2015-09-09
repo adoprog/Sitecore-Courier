@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml;
 
 namespace Sitecore.Courier.Runner
@@ -11,17 +7,29 @@ namespace Sitecore.Courier.Runner
     public static class ExclusionReader
     {
         public static List<string> GetExcludedItems(string projectFilePath, string buildConfiguration)
+        
         {
             var excludedItems = new List<string>();
-
+            var xmldocument = new XmlDocument();
+            xmldocument.Load(projectFilePath);
             var reader = XmlReader.Create(projectFilePath);
             reader.MoveToContent();
             while (reader.Read())
             {
-                // do stuff
-
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "SitecoreItem")
+                {
+                    var node = xmldocument.ReadNode(reader);
+                    foreach (XmlNode child in node.ChildNodes)
+                    {
+                        if (child.NodeType == XmlNodeType.Element && child.Name == "ExcludeItemFrom" &&
+                            child.InnerText == buildConfiguration)
+                        {
+                            var path = node.Attributes[0].Value;
+                            excludedItems.Add(path);
+                        }
+                    }
+                }
             }
-
 
             return excludedItems;
         }
