@@ -27,12 +27,12 @@ namespace Sitecore.Courier.Runner
                 Console.WriteLine("Configuration: {0}", options.Configuration);
                 Console.WriteLine("Path to project file: {0}", options.ScProjFilePath);
 
-                if (ExclusionValidator.HasValidExclusions(options.Configuration, options.ScProjFilePath))
+                if (ExclusionHandler.HasValidExclusions(options.Configuration, options.ScProjFilePath))
                 {
-                    var exclusions = ExclusionReader.GetExcludedItems(options.ScProjFilePath, options.Configuration);
+                    var exclusions = ExclusionHandler.GetExcludedItems(options.ScProjFilePath, options.Configuration);
 
-                    ExclusionProcessor.RemoveExcludedItems(options.Source, exclusions);
-                    ExclusionProcessor.RemoveExcludedItems(options.Target, exclusions);
+                    ExclusionHandler.RemoveExcludedItems(options.Source, exclusions);
+                    ExclusionHandler.RemoveExcludedItems(options.Target, exclusions);
                 }
 
                 var diff = new DiffInfo(

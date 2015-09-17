@@ -36,7 +36,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
         public void NullBuildConfigurationTest()
         {
             var expected = false;
-            var actual = ExclusionValidator.HasValidExclusions(null, null);
+            var actual = ExclusionHandler.HasValidExclusions(null, null);
             Assert.AreEqual(expected, actual);
         }
 
@@ -44,20 +44,20 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
         public void NullBuildConfigurationWithFileTest()
         {
             var expected = false;
-            var actual = ExclusionValidator.HasValidExclusions(null, "myfile.txt");
+            var actual = ExclusionHandler.HasValidExclusions(null, "myfile.txt");
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void BuildConfigurationWithNoFilePathTest()
         {
-            Assert.Throws<NullReferenceException>(() => ExclusionValidator.HasValidExclusions("myconfig", null));            
+            Assert.Throws<NullReferenceException>(() => ExclusionHandler.HasValidExclusions("myconfig", null));            
         }
 
         [Test]
         public void BuildConfigurationWithInvalidFilePathTest()
         {
-            Assert.Throws<FileNotFoundException>(() => ExclusionValidator.HasValidExclusions("myconfig", "invalidfile.xml"));
+            Assert.Throws<FileNotFoundException>(() => ExclusionHandler.HasValidExclusions("myconfig", "invalidfile.xml"));
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var expected = true;
             var path = Environment.CurrentDirectory;
             var xmlPath = string.Concat(path.Substring(0, path.IndexOf("bin")), "sample.xml");
-            var actual = ExclusionValidator.HasValidExclusions("myconfig", xmlPath);
+            var actual = ExclusionHandler.HasValidExclusions("myconfig", xmlPath);
             Assert.AreEqual(expected, actual);
         }
 
@@ -76,7 +76,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var expected = 3;
             var path = Environment.CurrentDirectory;
             var xmlPath = string.Concat(path.Substring(0, path.IndexOf("bin")), "sample.xml");
-            var exclusions = ExclusionReader.GetExcludedItems(xmlPath, "Test");
+            var exclusions = ExclusionHandler.GetExcludedItems(xmlPath, "Test");
             Assert.AreEqual(expected, exclusions.Count);            
         }
 
@@ -92,7 +92,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
 
             var path = Environment.CurrentDirectory;
             var xmlPath = string.Concat(path.Substring(0, path.IndexOf("bin")), "sample.xml");
-            var exclusions = ExclusionReader.GetExcludedItems(xmlPath, "Test");
+            var exclusions = ExclusionHandler.GetExcludedItems(xmlPath, "Test");
             Assert.AreEqual(expected, exclusions);  
         }
 
@@ -101,7 +101,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
         {
             var path = Environment.CurrentDirectory;
             var xmlPath = string.Concat(path.Substring(0, path.IndexOf("bin")), "sample.xml");
-            var exclusions = ExclusionReader.GetExcludedItems(xmlPath, "Test");
+            var exclusions = ExclusionHandler.GetExcludedItems(xmlPath, "Test");
             Assert.False(exclusions.Contains("sitecore\\content\\mysite\\donotexcludefrombuild1.item"));
         }
 
@@ -113,9 +113,9 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var xmlPath = string.Concat(path.Substring(0, path.IndexOf("bin")), "sample.xml");
             var configuration = "NO_RESULTS_CONFIGURATION";
 
-            var actual = ExclusionValidator.HasValidExclusions(configuration, xmlPath);
+            var actual = ExclusionHandler.HasValidExclusions(configuration, xmlPath);
             Assert.True(actual);
-            var exclusions = ExclusionReader.GetExcludedItems(xmlPath, configuration);
+            var exclusions = ExclusionHandler.GetExcludedItems(xmlPath, configuration);
             Assert.False(exclusions.Any());
         }
     }
