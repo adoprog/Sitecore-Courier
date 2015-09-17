@@ -1,12 +1,9 @@
-﻿using Sitecore.Shell.Applications.ContentEditor;
+﻿using Sitecore.Update;
+using Sitecore.Update.Engine;
+using System;
 
 namespace Sitecore.Courier.Runner
 {
-    using Sitecore.Update;
-    using Sitecore.Update.Engine;
-    using System;
-    using System.IO;
-
     /// <summary>
     /// Defines the program class.
     /// </summary>
