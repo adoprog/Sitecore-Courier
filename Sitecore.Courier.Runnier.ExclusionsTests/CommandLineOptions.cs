@@ -19,12 +19,12 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
           HelpText = "Location of update package")]
         public string Output { get; set; }
 
-        [Option('c', "Build Configuration", Required = false,
+        [Option('c', "configuration", Required = false,
             HelpText = "Build Configuration to diff")]
         public string Configuration { get; set; }
 
-        [Option('p', "Path to Sitecore Project File", Required = false,
-          HelpText = "Path to sitecore project file if excluding for build configuration")]
+        [Option('p', "exclusionsfilepath", Required = false,
+          HelpText = "Path to exclusions file if excluding for build configuration")]
         public string ScProjFilePath { get; set; }
 
         [ParserState]
