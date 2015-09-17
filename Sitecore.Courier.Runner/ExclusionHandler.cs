@@ -57,7 +57,7 @@ namespace Sitecore.Courier.Runner
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(buildConfiguration) && string.IsNullOrEmpty(xmlFilePath))
+            if (string.IsNullOrEmpty(xmlFilePath))
             {
                 throw new NullReferenceException("ScProjectFilePath is required if Build Configuration is provided.");
             }
