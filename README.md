@@ -86,3 +86,15 @@ and the following to the &lt;configuration&gt; section (right above &lt;sitecore
     </target>
   </sitecorediff>
 ```
+
+#Excluding items for build configurations#
+Additional optional parameters have been added to accommodate configuration-driven exclusion of items, i.e. testing or sandbox pages or templates not intended for production use. This is dependent on having a target configuration (associated with the Visual Studio build configuration) and an xml dictionary of the serialized items and any configuration-based exclusions. 
+
+Default code handles the .scproj file format produced by integration with [Team Development for Sitecore.](http://www.hhogdev.com/products/team-development-for-sitecore/overview.aspx)
+
+*Note: by default, the exclusions are performed by executing a file delete on the sitecore items targeted for exclusion. This is designed to be used in a build server environment; for local development and testing, it is recommended to copy the source and target folders to a temporary location that will not affect versioned items and unintentionally delete files from source control.*
+
+##Calling Sitecore Courier on a build server with an excluded configuration##
+*Sitecore.Courier.Runner.exe* -s C:\Source -t C:\Target -o c:\Output\package.update -b DevelopmentConfiguration -p C:\MyProject\Tds\myProj.scproj
+
+This will initially remove any items that are irrelevant to the build configuration and then perform normal Courier diffing to find any changes to relevant items. For example, any changes to sandbox/testing items are removed from comparison and will not be deployed to a production environment, but any production-level items that have been changed since the last release are picked up and packaged as usual.
