@@ -37,7 +37,7 @@ namespace Sitecore.Courier.Runner
                         foreach (XmlNode child in node.ChildNodes)
                         {
                             if (child.NodeType == XmlNodeType.Element && child.Name == "ExcludeItemFrom" &&
-                                child.InnerText == buildConfiguration)
+                                child.InnerText.Contains(buildConfiguration))
                             {
                                 var path = node.Attributes[0].Value;
                                 excludedItems.Add(path);
