@@ -1,8 +1,9 @@
 ﻿using CommandLine;
 using CommandLine.Text;
 
-namespace Sitecore.Courier.Runner
+namespace Sitecore.Courier.Runner.ExclusionsTests
 {
+    // Copy of the 'Options' class in Sitecore.Courier.Runner assembly.
     // Define a class to receive parsed values
     class Options
     {

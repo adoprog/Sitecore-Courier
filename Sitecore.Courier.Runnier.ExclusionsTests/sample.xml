@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ItemGroup>
+
+  <SitecoreItem Include="sitecore\content\mysite\excludefrombuild1.item">
+    <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    <ItemDeployment>DeployOnce</ItemDeployment>
+    <ExcludeItemFrom>Test</ExcludeItemFrom>
+  </SitecoreItem>
+  <SitecoreItem Include="sitecore\content\mysite\excludefrombuild2.item">
+    <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    <ItemDeployment>DeployOnce</ItemDeployment>
+    <ExcludeItemFrom>Test</ExcludeItemFrom>
+  </SitecoreItem>
+  <SitecoreItem Include="sitecore\content\mysite\excludefrombuild3.item">
+    <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    <ItemDeployment>DeployOnce</ItemDeployment>
+    <ExcludeItemFrom>Test</ExcludeItemFrom>
+  </SitecoreItem>
+  <SitecoreItem Include="sitecore\content\mysite\donotexcludefrombuild1.item">
+    <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    <ItemDeployment>DeployOnce</ItemDeployment>
+    <ExcludeItemFrom></ExcludeItemFrom>
+  </SitecoreItem>
+  <SitecoreItem Include="sitecore\content\mysite\donotexcludefrombuild2.item">
+    <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    <ItemDeployment>DeployOnce</ItemDeployment>
+  </SitecoreItem>
+  <SitecoreItem Include="sitecore\content\mysite\donotexcludefrombuild3.item">
+    <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    <ItemDeployment>DeployOnce</ItemDeployment>
+    <ExcludeItemFrom>OTHER_BUILD_CONFIGURATION</ExcludeItemFrom>
+  </SitecoreItem>
+
+</ItemGroup>
