@@ -5,6 +5,8 @@ using Sitecore.Update.Commands;
 namespace Sitecore.Courier
 {
   using System.Collections.Generic;
+
+  using Sitecore.Update;
   using Sitecore.Update.Configuration;
   using Sitecore.Update.Data;
   using Sitecore.Update.Interfaces;
@@ -14,7 +16,7 @@ namespace Sitecore.Courier
   /// </summary>
   public class DiffGenerator
   {
-    public static List<ICommand> GetDiffCommands(string sourcePath, string targetPath)
+    public static List<ICommand> GetDiffCommands(string sourcePath, string targetPath, CollisionBehavior collisionBehavior = CollisionBehavior.Undefined)
     {
       var targetManager = Factory.Instance.GetSourceDataManager();
       var sourceManager = Factory.Instance.GetTargetDataManager();
@@ -47,6 +49,8 @@ namespace Sitecore.Courier
           //if the itempath of a delete command starts with this delete command, it will be moved along to the new node, not deleted, just leave it alone
           commands.RemoveAll(c => c is DeleteItemCommand && ((DeleteItemCommand)c).ItemPath.StartsWith(command.Deleted.ItemPath));
       }
+
+      commands.ForEach(_ => _.CollisionBehavior = collisionBehavior);
 
       engine.ProcessCommands(ref commands);
       return commands;
