@@ -1,4 +1,7 @@
-﻿namespace Sitecore.Courier.Runner
+﻿using System.Text.RegularExpressions;
+using Sitecore.Courier.Rainbow;
+
+namespace Sitecore.Courier.Runner
 {
     using Sitecore.Update;
     using Sitecore.Update.Engine;
@@ -21,6 +24,9 @@
                 Console.WriteLine("Source: {0}", options.Source);
                 Console.WriteLine("Target: {0}", options.Target);
                 Console.WriteLine("Output: {0}", options.Output);
+
+                RainbowSerializationProvider.Enabled = options.UseRainbow;
+                
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target),
                     "Sitecore Courier Package",

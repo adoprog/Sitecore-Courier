@@ -18,6 +18,10 @@ namespace Sitecore.Courier.Runner
           HelpText = "Location of update package")]
         public string Output { get; set; }
 
+        [Option('r', "rainbow", Required = false,
+          HelpText = "Use Rainbow serializer")]
+        public bool UseRainbow { get; set; }
+
         [ParserState]
         public IParserState LastParserState { get; set; }
 
