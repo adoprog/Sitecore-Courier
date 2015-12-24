@@ -1,10 +1,9 @@
 ﻿using CommandLine;
 using CommandLine.Text;
+using Sitecore.Update;
 
 namespace Sitecore.Courier.Runner
 {
-    using Sitecore.Update;
-
     // Define a class to receive parsed values
     class Options
     {
@@ -31,6 +30,10 @@ namespace Sitecore.Courier.Runner
         [Option('p', "exclusionsfilepath", Required = false,
           HelpText = "Path to exclusions file if excluding for build configuration")]
         public string ScProjFilePath { get; set; }
+
+        [Option('r', "rainbow", Required = false,
+          HelpText = "Use Rainbow serializer")]
+        public bool UseRainbow { get; set; }
 
         [ParserState]
         public IParserState LastParserState { get; set; }

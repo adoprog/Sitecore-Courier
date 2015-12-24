@@ -44,6 +44,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Rainbow, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rainbow.Core.1.1.0-beta04\lib\net45\Rainbow.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Rainbow.Storage.Yaml, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rainbow.Storage.Yaml.1.1.0-beta04\lib\net45\Rainbow.Storage.Yaml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Sitecore.Kernel.dll</HintPath>
@@ -67,6 +75,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rainbow\RainbowDataItem.cs" />
+    <Compile Include="Rainbow\RainbowSerializationProvider.cs" />
     <Compile Include="ItemUtils.cs" />
     <Compile Include="DIffGenerator.cs" />
     <Compile Include="FileCommandsFilter.cs" />
@@ -74,7 +84,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuickContentDataItem.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

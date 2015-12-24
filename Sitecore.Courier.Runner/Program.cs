@@ -1,6 +1,7 @@
 ﻿using Sitecore.Update;
 using Sitecore.Update.Engine;
 using System;
+using Sitecore.Courier.Rainbow;
 
 namespace Sitecore.Courier.Runner
 {
@@ -32,7 +33,8 @@ namespace Sitecore.Courier.Runner
                     ExclusionHandler.RemoveExcludedItems(options.Source, exclusions);
                     ExclusionHandler.RemoveExcludedItems(options.Target, exclusions);
                 }
-
+                RainbowSerializationProvider.Enabled = options.UseRainbow;
+                
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target, options.CollisionBehavior),
                     "Sitecore Courier Package",
