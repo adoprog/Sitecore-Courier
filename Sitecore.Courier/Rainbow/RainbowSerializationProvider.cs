@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using Rainbow.Storage;
 using Rainbow.Storage.Yaml;
+using Sitecore.Courier.Rainbow.Configuration;
 using Sitecore.Update;
 using Sitecore.Update.Filters;
 using Sitecore.Update.Interfaces;
@@ -19,10 +18,15 @@ namespace Sitecore.Courier.Rainbow
     {
         public static bool Enabled = false;
         private readonly string _name;
+        private readonly YamlSerializationFormatter _formatter;
 
         public RainbowSerializationProvider(string name) : base(name)
         {
             _name = name;
+
+            var config = (RainbowConfigSection)ConfigurationManager.GetSection("rainbow");
+            var rainbowConfigFactory = new RainbowConfigFactory(config);
+            _formatter = rainbowConfigFactory.CreateFormatter() as YamlSerializationFormatter;
         }
 
         public object Clone()
@@ -37,9 +41,7 @@ namespace Sitecore.Courier.Rainbow
 
         public IDataIterator GetIterator(string rootPath, IList<Filter> filters)
         {
-            //TODO: from config?
-            var formatter = new YamlSerializationFormatter(null, null);
-            return new RainbowIterator(rootPath, formatter);
+            return new RainbowIterator(rootPath, _formatter);
         }
     }
 
