@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using Rainbow.Model;
 using Rainbow.Storage.Yaml;
 using Sitecore.Data.Serialization.ObjectModel;
@@ -123,6 +124,10 @@ namespace Sitecore.Courier.Rainbow
                     foreach (var field in version.Fields)
                     {
                         syncVersion.AddField(field.FieldId.ToString("B"), null/*name*/,null /*key?*/, field.Value, true);
+                    }
+                    foreach (var field in item.UnversionedFields.Where(x => x.Language.ToString() == version.Language.ToString()).SelectMany(x => x.Fields))
+                    {
+                        syncVersion.AddField(field.FieldId.ToString("B"), null/*name*/, null/*key?*/, field.Value, true);
                     }
                 }
             }
