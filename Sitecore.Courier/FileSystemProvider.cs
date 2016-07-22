@@ -1,22 +1,23 @@
-﻿namespace Sitecore.Courier
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Sitecore.Data.Serialization.ObjectModel;
+using Sitecore.Update;
+using Sitecore.Update.Filters;
+using Sitecore.Update.Interfaces;
+
+namespace Sitecore.Courier
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Diagnostics;
-  using System.IO;
-
-  using Sitecore.Data.Serialization.ObjectModel;
-  using Sitecore.Update;
-  using Sitecore.Update.Data.Items;
-  using Sitecore.Update.Interfaces;
-  using Sitecore.Update.Utils;
-
-  /// <summary>
+    /// <summary>
   /// The File system data provider.
   /// 
   /// </summary>
   public class FileSystemProvider : BaseDataProcessor, IDataProvider
   {
+
     /// <summary>
     /// Initializes a new instance of the <see cref="T:Sitecore.Courier.FileSystemProvider"/> class.
     /// 
@@ -37,7 +38,7 @@
     /// </returns>
     public virtual object Clone()
     {
-      return (object)new FileSystemProvider(this.Name);
+      return new FileSystemProvider(Name);
     }
 
     /// <summary>
@@ -63,7 +64,7 @@
       }
       catch (Exception ex)
       {
-        Trace.TraceWarning("Can't resolve source path: " + (object)ex);
+        Trace.TraceWarning("Can't resolve source path: " + ex);
       }
       return false;
     }
@@ -76,9 +77,9 @@
     /// <returns>
     /// The Data iterator.
     /// </returns>
-    public IDataIterator GetIterator(string rootPath, IList<Sitecore.Update.Filters.Filter> filters)
+    public IDataIterator GetIterator(string rootPath, IList<Filter> filters)
     {
-      return (IDataIterator)new FileSystemProvider.FileSystemDataIterator(rootPath, filters);
+      return new FileSystemDataIterator(rootPath, filters);
     }
 
     /// <summary>
@@ -101,12 +102,12 @@
       /// The file stack.
       /// 
       /// </summary>
-      private Stack<FileSystemProvider.FileSystemDataIterator> stack;
+      private Stack<FileSystemDataIterator> stack;
       /// <summary>
       /// The data pair.
       /// 
       /// </summary>
-      private FileSystemProvider.FileSystemDataIterator.DataPair[] dataPairs;
+      private DataPair[] dataPairs;
       /// <summary>
       /// The pair position.
       /// 
@@ -118,7 +119,7 @@
       /// 
       /// </summary>
       /// <param name="root">The root path.</param><param name="filters">The filters.</param>
-      public FileSystemDataIterator(string root, IList<Sitecore.Update.Filters.Filter> filters)
+      public FileSystemDataIterator(string root, IList<Filter> filters)
         : this(root, root, filters)
       {
       }
@@ -128,20 +129,14 @@
       /// 
       /// </summary>
       /// <param name="root">The root path.</param><param name="relatedRoot">The related root path.</param><param name="filters">The filters.</param>
-      private FileSystemDataIterator(string root, string relatedRoot, IList<Sitecore.Update.Filters.Filter> filters)
+      private FileSystemDataIterator(string root, string relatedRoot, IList<Filter> filters)
         : base(filters)
       {
-        this.root = root.Trim(new char[1]
-        {
-          '\\'
-        });
-        this.rootPath = relatedRoot.Trim(new char[1]
-        {
-          '\\'
-        });
-        this.stack = new Stack<FileSystemProvider.FileSystemDataIterator>();
-        this.position = 0;
-        this.InitializeDataPairs(this.rootPath);
+        this.root = root.Trim('\\');
+        rootPath = relatedRoot.Trim('\\');
+        stack = new Stack<FileSystemDataIterator>();
+        position = 0;
+        InitializeDataPairs(rootPath);
       }
 
       /// <summary>
@@ -156,24 +151,24 @@
       {
         try
         {
-          while (this.stack.Count > 0)
+          while (stack.Count > 0)
           {
-            FileSystemProvider.FileSystemDataIterator systemDataIterator = this.stack.Pop();
+            FileSystemDataIterator systemDataIterator = stack.Pop();
             if (systemDataIterator != null)
             {
               IDataItem dataItem = systemDataIterator.Next();
               if (dataItem != null)
               {
-                this.stack.Push(systemDataIterator);
+                stack.Push(systemDataIterator);
                 return dataItem;
               }
             }
             else
               break;
           }
-          if (this.position >= this.dataPairs.Length)
-            return (IDataItem)null;
-          FileSystemProvider.FileSystemDataIterator.DataPair dataPair = this.dataPairs[this.position];
+          if (position >= dataPairs.Length)
+            return null;
+          DataPair dataPair = dataPairs[position];
           
           /* After we return our DataItem and it's actually read from the File System, its size might become pretty high. For instance if our *.item takes 200MB, DataItem object size might be over 400MB.
            * If DataItem is not used more (e.g. by AddCommand), GC is free to collect it. However our dataPairs collection root prevents object from being collected.
@@ -181,26 +176,23 @@
            * Given that we don't get back to the this.dataPairs[position] struct more, we could safely clean it.
            * 
            * Local test demostrated that if DIFF package contains nothing (no commands are present), peak memory usage is reduced from 10GB to 2GB (on local test input).*/
-          this.dataPairs[this.position] = new FileSystemProvider.FileSystemDataIterator.DataPair();
-          this.position++;
+          dataPairs[position] = new DataPair();
+          position++;
 
           if (Directory.Exists(dataPair.Info.FullName))
           {
-            this.stack.Push(new FileSystemProvider.FileSystemDataIterator(this.root, dataPair.Info.FullName, this.Filters));
+            stack.Push(new FileSystemDataIterator(root, dataPair.Info.FullName, Filters));
             return dataPair.DataItem;
           }
-          else
-          {
             if (File.Exists(dataPair.Info.FullName))
-              return dataPair.DataItem;
-            Trace.TraceError(string.Format("Can't find file system entity '{0}'", (object)dataPair.Info.FullName));
-          }
+                return dataPair.DataItem;
+            Trace.TraceError(string.Format("Can't find file system entity '{0}'", dataPair.Info.FullName));
         }
         catch (Exception ex)
         {
-          Trace.TraceError(((object)ex).ToString());
+          Trace.TraceError(ex.ToString());
         }
-        return (IDataItem)null;
+        return null;
       }
 
       /// <summary>
@@ -212,70 +204,63 @@
       {
         if (!Directory.Exists(root))
         {
-          this.dataPairs = new FileSystemProvider.FileSystemDataIterator.DataPair[0];
+          dataPairs = new DataPair[0];
           Trace.TraceWarning("Directoty does not exist " + root);
         }
         else
         {
-          List<FileSystemProvider.FileSystemDataIterator.DataPair> list1 = new List<FileSystemProvider.FileSystemDataIterator.DataPair>();
+          List<DataPair> result = new List<DataPair>();
           try
           {
-            DirectoryInfo directoryInfo1 = new DirectoryInfo(root);
-            List<DirectoryInfo> list2 = new List<DirectoryInfo>((IEnumerable<DirectoryInfo>)directoryInfo1.GetDirectories());
-            list2.Sort((IComparer<DirectoryInfo>)new FileSystemProvider.FileSystemDataIterator.FileSystemInfoComparer<DirectoryInfo>());
-            List<FileInfo> list3 = new List<FileInfo>((IEnumerable<FileInfo>)directoryInfo1.GetFiles());
-            list3.Sort((IComparer<FileInfo>)new FileSystemProvider.FileSystemDataIterator.FileSystemInfoComparer<FileInfo>());
-            foreach (FileInfo file in list3)
+            var rootDirectory = new DirectoryInfo(root);
+            var directories = new List<DirectoryInfo>(rootDirectory.GetDirectories());
+            directories.Sort(new FileSystemInfoComparer<DirectoryInfo>());
+            var files = new List<FileInfo>(rootDirectory.GetFiles());
+            files.Sort(new FileSystemInfoComparer<FileInfo>());
+            foreach (var file in files.Where(file => file != null))
             {
-              if (file != null)
-              {
                 if (SerializationUtils.IsItemSerialization(file.FullName))
                 {
-                  DirectoryInfo directoryInfo2 = (DirectoryInfo)null;
-                  string strB = file.FullName.Substring(0, file.FullName.Length - ".item".Length);
-                  foreach (DirectoryInfo directoryInfo3 in list2)
-                  {
-                    if (string.Compare(directoryInfo3.FullName, strB, true) == 0)
+                    DirectoryInfo itemDirectory = null;
+                    var dirName = file.FullName.Substring(0, file.FullName.Length - ".item".Length);
+                    foreach (var dir in  directories.Where(d => string.Compare(d.FullName, dirName, true) == 0))
                     {
-                      directoryInfo2 = directoryInfo3;
-                      list2.Remove(directoryInfo3);
-                      break;
+                        itemDirectory = dir;
+                        directories.Remove(dir);
+                        break;
                     }
-                  }
-                  if (directoryInfo2 != null)
-                  {
-                    IDataItem dataItem = (IDataItem)new QuickContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
-                    if (this.IsAllowed(dataItem))
-                      list1.Add(new FileSystemProvider.FileSystemDataIterator.DataPair((FileSystemInfo)directoryInfo2, dataItem));
-                  }
-                  else
-                  {
-                    IDataItem dataItem = (IDataItem)new QuickContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
-                    if (this.IsAllowed(dataItem))
-                      list1.Add(new FileSystemProvider.FileSystemDataIterator.DataPair((FileSystemInfo)file, dataItem));
-                  }
+                    if (itemDirectory != null)
+                    {
+                        var dataItem = new QuickContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
+                        if (IsAllowed(dataItem))
+                            result.Add(new DataPair(itemDirectory, dataItem));
+                    }
+                    else
+                    {
+                        var dataItem = new QuickContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
+                        if (IsAllowed(dataItem))
+                            result.Add(new DataPair(file, dataItem));
+                    }
                 }
                 else
                 {
-                  IDataItem dataItem = (IDataItem)ItemUtils.GetFileSystemDataItem(this.root, file);
-                  if (this.IsAllowed(dataItem))
-                    list1.Add(new FileSystemProvider.FileSystemDataIterator.DataPair((FileSystemInfo)file, dataItem));
+                    var dataItem = ItemUtils.GetFileSystemDataItem(this.root, file);
+                    if (IsAllowed(dataItem))
+                        result.Add(new DataPair(file, dataItem));
                 }
-              }
             }
-            foreach (DirectoryInfo directory in list2)
-            {
-              IDataItem dataItem = (IDataItem)Update.Utils.ItemUtils.GetSystemFolderDataItem(this.root, directory);
-              if (this.IsAllowed(dataItem))
-                list1.Add(new FileSystemProvider.FileSystemDataIterator.DataPair((FileSystemInfo)directory, dataItem));
-            }
+            result.AddRange(
+                from directory in directories
+                let dataItem = Update.Utils.ItemUtils.GetSystemFolderDataItem(this.root, directory)
+                where IsAllowed(dataItem)
+                select new DataPair(directory, dataItem));
           }
           catch (Exception ex)
           {
-            Trace.TraceError("Can't initialize provider. Exception: " + (object)ex);
+            Trace.TraceError("Can't initialize provider. Exception: " + ex);
             throw ex;
           }
-          this.dataPairs = list1.ToArray();
+          dataPairs = result.ToArray();
         }
       }
 
@@ -308,7 +293,7 @@
         {
           get
           {
-            return this.info;
+            return info;
           }
         }
 
@@ -324,7 +309,7 @@
         {
           get
           {
-            return this.dataItem;
+            return dataItem;
           }
         }
 
@@ -336,7 +321,7 @@
         public DataPair(FileSystemInfo info, IDataItem item)
         {
           this.info = info;
-          this.dataItem = item;
+          dataItem = item;
         }
       }
 
@@ -365,11 +350,11 @@
         /// </returns>
         public int Compare(T x, T y)
         {
-          string strA = (string)null;
-          string strB = (string)null;
-          if ((object)x != null)
+          string strA = null;
+          string strB = null;
+          if (x != null)
             strA = x.FullName;
-          if ((object)y != null)
+          if (y != null)
             strB = y.FullName;
           return string.Compare(strA, strB);
         }

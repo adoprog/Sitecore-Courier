@@ -77,7 +77,7 @@ namespace Sitecore.Courier
             return 0;
         }
 
-        private Guid GetFastId()
+        protected virtual Guid GetFastId()
         {
             if (_id != Guid.Empty)
                 return _id;
