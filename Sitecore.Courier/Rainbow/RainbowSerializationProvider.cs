@@ -54,7 +54,7 @@ namespace Sitecore.Courier.Rainbow
 
         public RainbowIterator(string rootPath, YamlSerializationFormatter formatter)
         {
-            _rootPath = rootPath;
+            _rootPath = Path.GetFullPath(rootPath);
             _formatter = formatter;
             _currentPosition = 0;
             InitStack();
