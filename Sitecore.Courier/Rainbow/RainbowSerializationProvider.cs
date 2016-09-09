@@ -62,7 +62,8 @@ namespace Sitecore.Courier.Rainbow
 
         private void InitStack()
         {
-            _allFiles = FastDirectoryEnumerator.GetFiles(_rootPath, "*" + _formatter.FileExtension, SearchOption.AllDirectories);
+            _allFiles = FastDirectoryEnumerator.GetFiles(_rootPath, "*", SearchOption.AllDirectories);
+            
         }
 
         public IDataItem Next()
@@ -73,11 +74,18 @@ namespace Sitecore.Courier.Rainbow
             _currentPosition++;
             var dir = Path.GetDirectoryName(file.Path);
             var relative = _rootPath.Length == dir.Length ? string.Empty : dir.Substring(_rootPath.Length);
-            return new RainbowDataItem(
-                _rootPath,
-                relative,
-                file.Name,
-                _formatter);
+            if (file.Name.EndsWith(_formatter.FileExtension))
+            {
+                return new RainbowDataItem(
+                    _rootPath,
+                    relative,
+                    file.Name,
+                    _formatter);
+            }
+            else
+            {
+                return ItemUtils.GetFileSystemDataItem(_rootPath, new FileInfo(file.Path));
+            }
         }
     }
 }
