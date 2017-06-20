@@ -37,64 +37,14 @@ After it is installed, just put all your items and files into a single folder, a
 
 -o - Output package (will be created)
 
-
-## (Deprecated) Using web version for preview
-
-![alt text](http://2.bp.blogspot.com/-B5KLMs5DgNg/UGry9eD7mgI/AAAAAAAAATM/GpMaEvweH8M/s1600/webrunner.jpg)
-
-
-Additional information on the project is available in this blog post: [Sitecore Courier - Effortless Packaging](http://sitecoresnippets.blogspot.com/2012/10/sitecore-courier-effortless-packaging.html)
-
-**Important**
-
-After you install the package add the following to the configSections section of web.config:
-
-```xml
-    <section name="sitecorediff" type="Sitecore.Update.Configuration.ConfigReader, Sitecore.Update"/>
-```
-
-and the following to the &lt;configuration&gt; section (right above &lt;sitecore database="SqlServer"&gt;)
-
-```xml
-  <sitecorediff>
-    <commandfilters>
-      <filter id="changedFieldsFilter" mode="on" type="Sitecore.Update.Commands.Filters.ChangedFieldsFilter, Sitecore.Update">
-        <fields hint="list">
-          <field>__Created</field>
-          <field>{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}</field>
-          <field>__Revision</field>
-          <field>__Updated</field>
-          <field>__Updated by</field>
-        </fields>
-      </filter>
-    </commandfilters>
-    <dataproviders>
-      <dataprovider id="filesystemmain" type="Sitecore.Update.Data.Providers.FileSystemProvider, Sitecore.Update">
-        <param>$(id)</param>
-      </dataprovider>
-      <dataprovider id="snapshotprovider" type="Sitecore.Update.Data.Providers.SnapShotProvider, Sitecore.Update">
-        <param>$(id)</param>
-      </dataprovider>
-    </dataproviders>
-
-    <source type="Sitecore.Update.Data.DataManager, Sitecore.Update">
-      <param>source</param>
-    </source>
-
-    <target type="Sitecore.Update.Data.DataManager, Sitecore.Update">
-      <param>target</param>
-    </target>
-  </sitecorediff>
-```
-
-#Excluding items for build configurations#
+## Excluding items for build configurations
 Additional optional parameters have been added to accommodate configuration-driven exclusion of items, i.e. testing or sandbox pages or templates not intended for production use. This is dependent on having a target configuration (associated with the Visual Studio build configuration) and an xml dictionary of the serialized items and any configuration-based exclusions. 
 
-Default code handles the .scproj file format produced by integration with [Team Development for Sitecore.](http://www.hhogdev.com/products/team-development-for-sitecore/overview.aspx)
+Default code handles the .scproj file format.
 
 *Note: by default, the exclusions are performed by executing a file delete on the sitecore items targeted for exclusion. This is designed to be used in a build server environment; for local development and testing, it is recommended to copy the source and target folders to a temporary location that will not affect versioned items and unintentionally delete files from source control.*
 
-##Calling Sitecore Courier on a build server with an excluded configuration##
+## Calling Sitecore Courier on a build server with an excluded configuration
 *Sitecore.Courier.Runner.exe* -s C:\Source -t C:\Target -o c:\Output\package.update -b DevelopmentConfiguration -p C:\MyProject\Tds\myProj.scproj
 
 This will initially remove any items that are irrelevant to the build configuration and then perform normal Courier diffing to find any changes to relevant items. For example, any changes to sandbox/testing items are removed from comparison and will not be deployed to a production environment, but any production-level items that have been changed since the last release are picked up and packaged as usual.
