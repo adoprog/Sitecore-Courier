@@ -74,7 +74,7 @@ namespace Sitecore.Courier.Rainbow
             var name = Path.GetFileName(file);
             var relative = _rootPath.Length == dir.Length ? string.Empty : dir.Substring(_rootPath.Length);
 
-            if (file.Name.EndsWith(_formatter.FileExtension))
+            if (file.EndsWith(_formatter.FileExtension))
             {
               var item = new RainbowDataItem(
                   _rootPath,
@@ -89,10 +89,8 @@ namespace Sitecore.Courier.Rainbow
               
               return Next();
             }
-            else
-            {
-                return ItemUtils.GetFileSystemDataItem(_rootPath, new FileInfo(file.Path));
-            }
+
+            return ItemUtils.GetFileSystemDataItem(_rootPath, new FileInfo(file));
         }
     }
 }
