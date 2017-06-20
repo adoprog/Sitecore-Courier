@@ -9,7 +9,6 @@ using System.IO;
 using Rainbow.Model;
 using Rainbow.Storage.Yaml;
 using Sitecore.Data.Serialization.ObjectModel;
-using Sitecore.Update.Data.Items;
 
 namespace Sitecore.Courier.Rainbow
 {
@@ -63,11 +62,23 @@ namespace Sitecore.Courier.Rainbow
         protected virtual IItemData GetItemData()
         {
             if (_itemData != null)
+            {
                 return _itemData;
+            }
+
             using (var stream = File.OpenRead(ItemPath))
             {
-                _itemData = _formatter.ReadSerializedItem(stream, ItemPath);
+                try
+                {
+                    _itemData = _formatter.ReadSerializedItem(stream, ItemPath);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Unable to deserialize item: " + ItemPath);
+                    return null;
+                }
             }
+
             _itemMetaData = _itemData;
             return _itemData;
         }
@@ -81,7 +92,6 @@ namespace Sitecore.Courier.Rainbow
                 return _itemMetaData = _formatter.ReadSerializedItemMetadata(stream, ItemPath);
             }
         }
-
 
         /// <summary>
         /// Gets the syncitem.

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Sitecore.Data.Serialization.ObjectModel;
 using Sitecore.Diagnostics;
 using Sitecore.Update.Commands;
@@ -32,6 +28,8 @@ namespace Sitecore.Courier
             : base(rootPath, relatedPath, name, syncItem)
         {
         }
+
+        public virtual bool HasItem => (_item = GetItem()) != null;
 
         protected override SyncItem GetItem()
         {
