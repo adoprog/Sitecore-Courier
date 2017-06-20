@@ -14,7 +14,6 @@ namespace Sitecore.Courier
   public class FileCommandsFilter : ICommandFilter
   {
     private List<string> excludedFolders = new List<string>();
-    private bool forceoverwrites = false;
 
     public FileCommandsFilter()
     {
