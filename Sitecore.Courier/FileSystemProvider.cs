@@ -130,9 +130,9 @@ namespace Sitecore.Courier
       /// <param name="root">The root path.</param><param name="relatedRoot">The related root path.</param><param name="filters">The filters.</param>
       private FileSystemDataIterator(string root, string relatedRoot, IList<Filter> filters)
         : base(filters)
-      {
-        this.root = root.Trim('\\');
-        rootPath = relatedRoot.Trim('\\');
+      {                
+        this.root = new DirectoryInfo(root).FullName;
+        rootPath = new DirectoryInfo(relatedRoot).FullName;
         stack = new Stack<FileSystemDataIterator>();
         position = 0;
         InitializeDataPairs(rootPath);
