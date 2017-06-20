@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using Rainbow.Storage;
 using Rainbow.Storage.Yaml;
 using Sitecore.Courier.Rainbow.Configuration;
 using Sitecore.Update;
@@ -49,7 +48,7 @@ namespace Sitecore.Courier.Rainbow
     {
         private readonly string _rootPath;
         private readonly YamlSerializationFormatter _formatter;
-        private FileData[] _allFiles;
+        private string[] _allFiles;
         private int _currentPosition;
 
         public RainbowIterator(string rootPath, YamlSerializationFormatter formatter)
@@ -62,8 +61,7 @@ namespace Sitecore.Courier.Rainbow
 
         private void InitStack()
         {
-            _allFiles = FastDirectoryEnumerator.GetFiles(_rootPath, "*", SearchOption.AllDirectories);
-            
+            _allFiles = Directory.GetFiles(_rootPath, "*" + _formatter.FileExtension, SearchOption.AllDirectories);
         }
 
         public IDataItem Next()
@@ -72,15 +70,24 @@ namespace Sitecore.Courier.Rainbow
                 return null;
             var file = _allFiles[_currentPosition];
             _currentPosition++;
-            var dir = Path.GetDirectoryName(file.Path);
+            var dir = Path.GetDirectoryName(file);
+            var name = Path.GetFileName(file);
             var relative = _rootPath.Length == dir.Length ? string.Empty : dir.Substring(_rootPath.Length);
+
             if (file.Name.EndsWith(_formatter.FileExtension))
             {
-                return new RainbowDataItem(
-                    _rootPath,
-                    relative,
-                    file.Name,
-                    _formatter);
+              var item = new RainbowDataItem(
+                  _rootPath,
+                  relative,
+                  name,
+                  _formatter);
+
+              if (item.HasItem)
+              {
+                  return item;
+              }
+              
+              return Next();
             }
             else
             {

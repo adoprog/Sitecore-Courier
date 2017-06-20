@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Sitecore.Data.Serialization.ObjectModel;
 using Sitecore.Update;
 using Sitecore.Update.Filters;
@@ -232,13 +231,13 @@ namespace Sitecore.Courier
                     if (itemDirectory != null)
                     {
                         var dataItem = new QuickContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
-                        if (IsAllowed(dataItem))
+                        if (IsAllowed(dataItem) && dataItem.HasItem)
                             result.Add(new DataPair(itemDirectory, dataItem));
                     }
                     else
                     {
                         var dataItem = new QuickContentDataItem(this.root, this.root.Length == file.Directory.FullName.Length ? string.Empty : file.Directory.FullName.Substring(this.root.Length), file.Name);
-                        if (IsAllowed(dataItem))
+                        if (IsAllowed(dataItem) && dataItem.HasItem)
                             result.Add(new DataPair(file, dataItem));
                     }
                 }

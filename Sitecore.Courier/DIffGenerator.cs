@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using Sitecore.Update.Commands;
 
 namespace Sitecore.Courier
