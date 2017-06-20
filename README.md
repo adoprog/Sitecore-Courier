@@ -8,26 +8,22 @@ Introduction video about the module: https://youtu.be/-_uA6FDojKY
 Sitecore Courier aims to fill the gap between the development and production environments when building websites with Sitecore CMS. You can download it here: https://bit.ly/SitecoreCourier (now also includes Console Runner) or install it in a few seconds via Chocolatey - https://chocolatey.org/packages/sitecore-courier.
 
 It lets you build Sitecore Update packages automatically, by analyzing serialized Sitecore items and packaging only changed items.
+The module can be installed as a Sitecore package, or used in build system with simple .exe runner.
 
- The module can be installed as a Sitecore package, or used in build system with simple .exe runner.
+**Usage workflow**
 
-**Suggested usage workflow**
+Simple: Just point Sitecore Courier to the folder where your serialized items are stored (standard .item or Rainbow's .yml) and it will create a package that can be installed at any Sitecore website.
 
-After you deploy the initial version of your website, you should:
+Advanced: After you deploy the initial version of your website, you should:
 
 1. Serialize all items you want to move between the servers (usually, all custom items in Core and Master DB). Get the latest Serialization Guide here.
 2. Create a TAG from it in a version control system
 3. Keep doing changes in TRUNK, serialize changed items, commit them, etc.
 4. And packages will be generated automatically, by comparing serialization from TAG (source) to the TRUNK (target). Incremental package will contain only changed items.
 
-## Using Windows shell extension
-
-Sitecore Courier can now be installed via Chocolatey: https://chocolatey.org/packages/sitecore-courier
-After it is installed, just put all your items and files into a single folder, and right-click on it to create a package
-
-![alt text](http://3.bp.blogspot.com/-voh_5SsBcyk/VKEV_I0OpyI/AAAAAAAACb0/K1ptEj0iNQk/s1600/courier.png)
-
 ## Using console runner at your build server
+
+Sample Habitat script here: https://github.com/adoprog/Habitat/blob/master/scripts/courier.ps1
 
 *Sitecore.Courier.Runner.exe* -s C:\Source -t C:\Target -o C:\Package.update
 
@@ -36,6 +32,13 @@ After it is installed, just put all your items and files into a single folder, a
 -t - Target folder
 
 -o - Output package (will be created)
+
+## Using Windows shell extension
+
+Sitecore Courier can now be installed via Chocolatey: https://chocolatey.org/packages/sitecore-courier
+After it is installed, just put all your items and files into a single folder, and right-click on it to create a package
+
+![alt text](http://3.bp.blogspot.com/-voh_5SsBcyk/VKEV_I0OpyI/AAAAAAAACb0/K1ptEj0iNQk/s1600/courier.png)
 
 ## Excluding items for build configurations
 Additional optional parameters have been added to accommodate configuration-driven exclusion of items, i.e. testing or sandbox pages or templates not intended for production use. This is dependent on having a target configuration (associated with the Visual Studio build configuration) and an xml dictionary of the serialized items and any configuration-based exclusions. 
