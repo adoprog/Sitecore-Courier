@@ -10,7 +10,7 @@ The module can be installed as a Sitecore package, or used in build system with 
 
 You can download it here: https://bit.ly/SitecoreCourier (now also includes Console Runner) or install it in a few seconds via Chocolatey - https://chocolatey.org/packages/sitecore-courier.
 
-**Introduction video about the module: 
+**Introduction video about the module**
 
 [![Introduction video about the module](https://img.youtube.com/vi/-_uA6FDojKY/0.jpg)](https://www.youtube.com/watch?v=-_uA6FDojKY)
 
