@@ -16,7 +16,7 @@ You can download it here: https://bit.ly/SitecoreCourier (now also includes Cons
 
 **Usage workflow**
 
-Simple: Just point Sitecore Courier to the folder where your serialized items are stored (standard .item or Rainbow's .yml) and it will create a package that can be installed at any Sitecore website.
+Simple: Just point Sitecore Courier to the folder where your serialized items are stored (standard .item or [Rainbow's](https://github.com/kamsar/Rainbow) .yml) and it will create a package that can be installed at any Sitecore website.
 
 Advanced: After you deploy the initial version of your website, you should:
 
