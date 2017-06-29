@@ -17,8 +17,8 @@ namespace Sitecore.Courier
   {
     public static List<ICommand> GetDiffCommands(string sourcePath, string targetPath, CollisionBehavior collisionBehavior = CollisionBehavior.Undefined)
     {
-      var targetManager = Factory.Instance.GetSourceDataManager();
-      var sourceManager = Factory.Instance.GetTargetDataManager();
+      var sourceManager = Factory.Instance.GetSourceDataManager();
+      var targetManager = Factory.Instance.GetTargetDataManager();
 
       sourceManager.SerializationPath = sourcePath;
       targetManager.SerializationPath = targetPath;
