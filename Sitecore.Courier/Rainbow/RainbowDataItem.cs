@@ -139,6 +139,10 @@ namespace Sitecore.Courier.Rainbow
                     {
                         syncVersion.AddField(field.FieldId.ToString("B"), null/*name*/, null/*key?*/, field.Value, true);
                     }
+                    foreach (var field in item.UnversionedFields.Where(x => x.Language.ToString() == version.Language.ToString()).SelectMany(x => x.Fields))
+                    {
+                        syncVersion.AddField(field.FieldId.ToString("B"), null/*name*/, null/*key?*/, field.Value, true);
+                    }
                 }
             }
 
