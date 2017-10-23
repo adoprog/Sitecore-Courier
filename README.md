@@ -22,8 +22,10 @@ Advanced: After you deploy the initial version of your website, you should:
 
 1. Serialize all items you want to move between the servers (usually, all custom items in Core and Master DB). Get the latest Serialization Guide here.
 2. Create a TAG from it in a version control system
-3. Keep doing changes in TRUNK, serialize changed items, commit them, etc.
-4. And packages will be generated automatically, by comparing serialization from TAG (source) to the TRUNK (target). Incremental package will contain only changed items.
+3. Keep doing changes in TRUNK (or 'Develop', etc. in Git), serialize changed items, commit them, etc.
+4. And packages will be generated automatically, by comparing serialization from TAG (source) to the TRUNK (target). Incremental package will contain only changed items ('delta' package).
+
+Similar workflow is now referred in other tools as 'Git Delta Deploy'
 
 ## Using console runner at your build server
 
