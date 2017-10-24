@@ -33,13 +33,13 @@ Sample Habitat script here: https://github.com/adoprog/Habitat/blob/master/scrip
 
 *Sitecore.Courier.Runner.exe* -s C:\Source -t C:\Target -o C:\Package.update
 
--s - Source folder
+-s - Source folder (optional, only needed for Delta Packages)
 
 -t - Target folder
 
 -o - Output package (will be created)
 
--r (add if you want to use Rainbow serialization format, otherwise it will treat .yml as files)
+-r - Add if you want to use Rainbow serialization format, otherwise it will treat .yml as files
 
 ## Using Windows shell extension
 
