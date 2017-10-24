@@ -39,6 +39,8 @@ Sample Habitat script here: https://github.com/adoprog/Habitat/blob/master/scrip
 
 -o - Output package (will be created)
 
+-r (add if you want to use Rainbow serialization format, otherwise it will treat .yml as files)
+
 ## Using Windows shell extension
 
 Sitecore Courier can now be installed via Chocolatey: https://chocolatey.org/packages/sitecore-courier
