@@ -7,7 +7,7 @@ namespace Sitecore.Courier.Runner
     // Define a class to receive parsed values
     class Options
     {
-        [Option('s', "source", Required = true,
+        [Option('s', "source", Required = false,
           HelpText = "Source files")]
         public string Source { get; set; }
 
