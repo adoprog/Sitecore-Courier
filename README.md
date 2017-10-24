@@ -8,7 +8,7 @@ Sitecore Courier aims to fill the gap between the development and production env
 It lets you build Sitecore Update packages automatically, by analyzing serialized Sitecore items and packaging only changed items.
 The module can be installed as a Sitecore package, or used in build system with simple .exe runner.
 
-You can download it [here](https://github.com/adoprog/Sitecore-Courier/releases) or from https://bit.ly/SitecoreCourier (now also includes Console Runner) or install it in a few seconds via Chocolatey - https://chocolatey.org/packages/sitecore-courier.
+You can download it [here](https://github.com/adoprog/Sitecore-Courier/releases) or from https://bit.ly/SitecoreCourier or install it in a few seconds via Chocolatey - https://chocolatey.org/packages/sitecore-courier.
 
 **Introduction video about the module**
 
