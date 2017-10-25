@@ -59,7 +59,7 @@
 
           process.StartInfo.UseShellExecute = false;
           process.StartInfo.FileName = @"Sitecore.Courier.Runner.exe";
-          process.StartInfo.Arguments = string.Format(@"-s ""{0}"" -t ""{1}"" -o ""{2}\Sitecore.Courier_{3}.update""", GetTemporaryDirectory(), filePath, targetFolder.Parent.FullName, targetFolder.Name);
+          process.StartInfo.Arguments = string.Format(@"-t ""{0}"" -o ""{1}\Sitecore.Courier_{2}.update""", filePath, targetFolder.Parent.FullName, targetFolder.Name);
           process.Start();
         }
         catch (Exception e)
@@ -67,13 +67,6 @@
           MessageBox.Show(e.Message);
         }
       }
-    }
-
-    public string GetTemporaryDirectory()
-    {
-      string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-      Directory.CreateDirectory(tempDirectory);
-      return tempDirectory;
     }
   }
 }

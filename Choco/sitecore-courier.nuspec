@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>sitecore-courier</id>
+    <version>1.2.0</version>
+    <title>Sitecore Courier</title>
+    <authors>Alexander Doroshenko</authors>
+    <owners>Alexander Doroshenko</owners>
+    <licenseUrl>https://github.com/adoprog/Sitecore-Courier/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/adoprog/Sitecore-Courier</projectUrl>
+    <iconUrl>https://camo.githubusercontent.com/3be6eb0673e377c41db1f0a06b2f13df0085ee4f/687474703a2f2f7331352e706f7374696d6167652e6f72672f6363656b6d356e69662f75736572343931395f70696331313835385f313237303232373037342e6a70673f6e6f43616368653d31333439313830373638</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sitecore Courier aims to fill the gap between the development and production environments when building websites with Sitecore CMS. It lets you build Sitecore Update packages automatically, by analyzing serialized Sitecore items and packaging only changed items.</description>
+    <summary>Sitecore Courier packs items into .update packages</summary>
+    <releaseNotes>This is initial release.</releaseNotes>
+    <tags>sitecore, courier, package, update</tags>
+  </metadata>
+</package>
