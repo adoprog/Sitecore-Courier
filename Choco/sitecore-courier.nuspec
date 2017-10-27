@@ -13,6 +13,6 @@
     <description>Sitecore Courier aims to fill the gap between the development and production environments when building websites with Sitecore CMS. It lets you build Sitecore Update packages automatically, by analyzing serialized Sitecore items and packaging only changed items.</description>
     <summary>Sitecore Courier packs items into .update packages</summary>
     <releaseNotes>This is initial release.</releaseNotes>
-    <tags>sitecore, courier, package, update</tags>
+    <tags>sitecore courier package update</tags>
   </metadata>
 </package>
