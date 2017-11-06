@@ -82,6 +82,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -93,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Iterators\EmptyIterator.cs" />
+    <Compile Include="NewCourierPackageCommand.cs" />
     <Compile Include="Rainbow\Configuration\FieldFormatterCollection.cs" />
     <Compile Include="Rainbow\Configuration\FieldFormatterElement.cs" />
     <Compile Include="Rainbow\Configuration\RainbowConfigFactory.cs" />
@@ -106,8 +111,10 @@
     <Compile Include="FileSystemProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuickContentDataItem.cs" />
+    <Compile Include="SerializationProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="App_Config\Include\Rainbow.config" />
     <None Include="App_Config\Include\Unicorn\Unicorn.AutoPublish.config" />
     <None Include="App_Config\Include\Unicorn\Unicorn.config" />
@@ -121,6 +128,12 @@
     <None Include="App_Config\Include\Unicorn\Unicorn.UI.config" />
     <None Include="App_Config\Include\Unicorn\Unicorn.zSharedSecret.config.example" />
     <None Include="packages.config" />
+    <Content Include="Sitecore.Courier.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sitecore.Courier.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
