@@ -10,6 +10,12 @@ The module can be installed as a Sitecore package, or used in build system with 
 
 You can download it [here](https://github.com/adoprog/Sitecore-Courier/releases) or from https://bit.ly/SitecoreCourier or install it in a few seconds via Chocolatey - https://chocolatey.org/packages/sitecore-courier.
 
+**NEW**
+
+You can now install the module from the official PowerShell Gallery. Simply type **Install-Module -Name Sitecore.Courier** from the elevated PowerShell console and you'll be able to use New-CourierPackage cmdlet.
+
+New-CourierPackage -Target ..\src -Output .\package.update -SerializationProvider "Rainbow" 
+
 **Introduction video about the module**
 
 [![Introduction video about the module](https://img.youtube.com/vi/-_uA6FDojKY/0.jpg)](https://www.youtube.com/watch?v=-_uA6FDojKY)
