@@ -19,7 +19,7 @@ namespace Sitecore.Courier.Runner
           HelpText = "Location of update package")]
         public string Output { get; set; }
         
-        [Option('b', "collisionBehavior", Required = false, DefaultValue = CollisionBehavior.Undefined,
+        [Option('b', "behavior", Required = false, DefaultValue = CollisionBehavior.Undefined,
           HelpText = "The collision behavior (default, force or skip) for the update package.")]
         public CollisionBehavior CollisionBehavior { get; set; }
 
