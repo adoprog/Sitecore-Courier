@@ -61,7 +61,7 @@ namespace Sitecore.Courier.Rainbow
 
         private void InitStack()
         {
-            _allFiles = Directory.GetFiles(_rootPath, "*" + _formatter.FileExtension, SearchOption.AllDirectories);
+            _allFiles = Directory.GetFiles(_rootPath, "*", SearchOption.AllDirectories);
         }
 
         public IDataItem Next()
