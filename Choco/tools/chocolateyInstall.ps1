@@ -1,5 +1,5 @@
 ﻿$name = "sitecore-courier"
-$url = "https://github.com/adoprog/Sitecore-Courier/releases/download/1.2/Sitecore.Courier.Runner.zip"
+$url = "https://github.com/adoprog/Sitecore-Courier/releases/download/1%2C2%2C2/Sitecore.Courier.Runner.zip"
 $unzipLocation = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 Write-Output "Unzip location: $unzipLocation"
 
