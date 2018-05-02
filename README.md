@@ -1,7 +1,7 @@
 Sitecore-Courier
 ================
 
-![alt text](http://s15.postimage.org/ccekm5nif/user4919_pic11858_1270227074.jpg?noCache=1349180768)
+![Courier Icon](https://github.com/adoprog/Sitecore-Courier/blob/master/wiki/images/courier-icon.png)
 
 Sitecore Courier aims to fill the gap between the development and production environments when building websites with Sitecore CMS. 
 
