@@ -37,7 +37,7 @@ Similar workflow is now referred in other tools as 'Git Delta Deploy'
 
 Sample Habitat script here: https://github.com/adoprog/Habitat/blob/master/scripts/courier.ps1
 
-*Sitecore.Courier.Runner.exe* -s C:\Source -t C:\Target -o C:\Package.update
+*Sitecore.Courier.Runner.exe* -s C:\Source -t C:\Target -o C:\Package.update (add -r if you use Rainbow)
 
 -s - Source folder (optional, only needed for Delta Packages)
 
