@@ -23,6 +23,7 @@ namespace Sitecore.Courier.Runner
                 Console.WriteLine("Target: {0}", options.Target);
                 Console.WriteLine("Output: {0}", options.Output);
                 Console.WriteLine("Collision behavior: {0}", options.CollisionBehavior);
+                Console.WriteLine("Use Rainbow: {0}", options.UseRainbow);
                 Console.WriteLine("Configuration: {0}", options.Configuration);
                 Console.WriteLine("Path to project file: {0}", options.ScProjFilePath);
 
@@ -33,8 +34,8 @@ namespace Sitecore.Courier.Runner
                     ExclusionHandler.RemoveExcludedItems(options.Source, exclusions);
                     ExclusionHandler.RemoveExcludedItems(options.Target, exclusions);
                 }
+
                 RainbowSerializationProvider.Enabled = options.UseRainbow;
-                
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target, options.CollisionBehavior),
                     "Sitecore Courier Package",
