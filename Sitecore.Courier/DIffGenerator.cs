@@ -26,46 +26,57 @@ namespace Sitecore.Courier
       IDataIterator targetDataIterator = targetManager.ItemIterator;
 
       var engine = new DataEngine();
+      var commands = GetDiffCommands(targetPath, collisionBehavior, sourceDataIterator, targetDataIterator, engine);
+      engine.ProcessCommands(ref commands);
+      return commands;
+    }
+
+    public static List<ICommand> GetDiffCommands(string targetPath, CollisionBehavior collisionBehavior,
+      IDataIterator sourceDataIterator, IDataIterator targetDataIterator, DataEngine engine)
+    {
       var commands = new List<ICommand>();
       commands.AddRange(GenerateDiff(sourceDataIterator, targetDataIterator));
 
       //if an item is found to be deleted AND added, we can be sure it's a move
       var deleteCommands = commands.OfType<DeleteItemCommand>();
       var shouldBeUpdateCommands =
-          commands.OfType<AddItemCommand>()
-              .Select(a => new
-              {
-                  Added = a,
-                  Deleted = deleteCommands.FirstOrDefault(d => d.ItemID == a.ItemID)
-              }).Where(u => u.Deleted != null).ToList();
+        commands.OfType<AddItemCommand>()
+          .Select(a => new
+          {
+            Added = a,
+            Deleted = deleteCommands.FirstOrDefault(d => d.ItemID == a.ItemID)
+          }).Where(u => u.Deleted != null).ToList();
       var targetItemIDs = GetItemIDs(targetPath);
       foreach (var command in shouldBeUpdateCommands)
       {
-          commands.AddRange(command.Deleted.GenerateUpdateCommand(command.Added));
-          commands.Remove(command.Added);
-          commands.Remove(command.Deleted);
+        commands.AddRange(command.Deleted.GenerateUpdateCommand(command.Added));
+        commands.Remove(command.Added);
+        commands.Remove(command.Deleted);
 
-          //now, this one is an assumption, but would go wrong without the assumption anyway: this assumption is in fact safer
-          //if the itempath of a delete command starts with this delete command, it will be moved along to the new node, not deleted, just leave it alone
-          //but we will skip items which are not in the target folder
-          commands.RemoveAll(c =>
-            c is DeleteItemCommand && ((DeleteItemCommand) c).ItemPath.StartsWith(command.Deleted.ItemPath) &&
-            !targetItemIDs.Contains(((DeleteItemCommand) c).ItemID));
+        //now, this one is an assumption, but would go wrong without the assumption anyway: this assumption is in fact safer
+        //if the itempath of a delete command starts with this delete command, it will be moved along to the new node, not deleted, just leave it alone
+        //but we will skip items which are not in the target folder
+        commands.RemoveAll(c =>
+          c is DeleteItemCommand && ((DeleteItemCommand) c).ItemPath.StartsWith(command.Deleted.ItemPath) &&
+          !targetItemIDs.Contains(((DeleteItemCommand) c).ItemID));
       }
 
       commands.ForEach(_ => _.CollisionBehavior = collisionBehavior);
-
-      engine.ProcessCommands(ref commands);
       return commands;
     }
 
     private static HashSet<string> GetItemIDs(string path)
     {
+      var itemIDs = new HashSet<string>();
+      if (string.IsNullOrEmpty(path))
+      {
+        return itemIDs;
+      }
+
       var dataManager = Factory.Instance.GetTargetDataManager();
       dataManager.SerializationPath = path;
       IDataIterator dataIterator = dataManager.ItemIterator;
 
-      var itemIDs = new HashSet<string>();
       var item = dataIterator.Next();
       while (item != null && item is QuickContentDataItem)
       {

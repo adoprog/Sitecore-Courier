@@ -29,6 +29,15 @@ namespace Sitecore.Courier
         {
         }
 
+        public QuickContentDataItem(string rootPath, string relatedPath, string name, SyncItem syncItem, bool initializeSyncItem)
+            : base(rootPath, relatedPath, name, syncItem)
+        {
+          if (initializeSyncItem)
+          {
+            this._item = syncItem;
+          }
+        }
+
         public virtual bool HasItem => (_item = GetItem()) != null;
 
         protected override SyncItem GetItem()
