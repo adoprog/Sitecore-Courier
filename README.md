@@ -1,6 +1,8 @@
 Sitecore-Courier
 ================
 
+[![Build status](https://ci.appveyor.com/api/projects/status/dv0lfj2h9wq07tmx?svg=true)](https://ci.appveyor.com/project/adoprog/sitecore-courier)
+
 <img src="https://github.com/adoprog/Sitecore-Courier/blob/master/wiki/images/courier-icon.png" width="200">
 
 Sitecore Courier aims to fill the gap between the development and production environments when building websites with Sitecore CMS. 
