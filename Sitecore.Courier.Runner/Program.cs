@@ -50,7 +50,7 @@ namespace Sitecore.Courier.Runner
                 }
                 
                 var diff = new DiffInfo(
-                    DiffGenerator.GetDiffCommands(options.Source, options.Target, options.CollisionBehavior),
+                    commands,
                     "Sitecore Courier Package",
                     string.Empty,
                     string.Format("Diff between serialization folders '{0}' and '{1}'.", options.Source, options.Target));
