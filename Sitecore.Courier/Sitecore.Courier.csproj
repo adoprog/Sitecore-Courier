@@ -96,6 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewDIffGenerator.cs" />
     <Compile Include="Iterators\EmptyIterator.cs" />
     <Compile Include="NewCourierPackageCommand.cs" />
     <Compile Include="Rainbow\Configuration\FieldFormatterCollection.cs" />
