@@ -2,6 +2,8 @@
 using Sitecore.Update.Engine;
 using System;
 using Sitecore.Courier.Rainbow;
+using System.Collections.Generic;
+using Sitecore.Update.Interfaces;
 
 namespace Sitecore.Courier.Runner
 {
@@ -36,6 +38,17 @@ namespace Sitecore.Courier.Runner
                 }
 
                 RainbowSerializationProvider.Enabled = options.UseRainbow;
+                
+                List<ICommand> commands = null;
+                if (options.UseNewDiffGenerator)
+                {
+                    commands = NewDiffGenerator.GetDiffCommands(options.Source, options.Target, options.CollisionBehavior);
+                }
+                else
+                {
+                    commands = DiffGenerator.GetDiffCommands(options.Source, options.Target, options.CollisionBehavior);
+                }
+                
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(options.Source, options.Target, options.CollisionBehavior),
                     "Sitecore Courier Package",

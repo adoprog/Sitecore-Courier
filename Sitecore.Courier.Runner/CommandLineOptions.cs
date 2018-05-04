@@ -35,6 +35,10 @@ namespace Sitecore.Courier.Runner
           HelpText = "Use Rainbow serializer")]
         public bool UseRainbow { get; set; }
 
+        [Option('n', "newdiffgenerator", Required = false,
+          HelpText = "Use new diffgenerator")]
+        public bool UseNewDiffGenerator { get; set; }
+
         [ParserState]
         public IParserState LastParserState { get; set; }
 
