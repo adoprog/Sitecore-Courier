@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using Sitecore.Courier.Runner;
 
 namespace Sitecore.Courier.Runner.ExclusionsTests
 {
-    public class Class1
+    public class ConfigurationTests
     {
         [Test]
         public void ArgumentParserTest()
