@@ -27,14 +27,19 @@ namespace Sitecore.Courier
 
             IDataIterator sourceDataIterator = sourceManager.ItemIterator ?? new EmptyIterator();
             IDataIterator targetDataIterator = targetManager.ItemIterator;
+            
+            var commands = GetCommands(sourceDataIterator, targetDataIterator);
+            var engine = new DataEngine();
+            engine.ProcessCommands(ref commands);
+            return commands;
+        }
 
+        public static List<ICommand> GetCommands(IDataIterator sourceDataIterator, IDataIterator targetDataIterator)
+        {
             var source = Map(sourceDataIterator);
             var target = Map(targetDataIterator);
 
             var commands = GetCommands(source, target);
-            
-            var engine = new DataEngine();
-            engine.ProcessCommands(ref commands);
             return commands;
         }
 
