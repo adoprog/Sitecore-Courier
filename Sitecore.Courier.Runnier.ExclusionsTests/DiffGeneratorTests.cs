@@ -28,7 +28,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
 
             // Act
-            var commands = DiffGenerator.GetDiffCommands(string.Empty, CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+            var commands = DiffGenerator.GetDiffCommands(new HashSet<string>(), CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
 
             //Assert
             Assert.AreEqual(1, commands.Count);
@@ -51,7 +51,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
 
             // Act
-            var commands = DiffGenerator.GetDiffCommands(string.Empty, CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+            var commands = DiffGenerator.GetDiffCommands(new HashSet<string>(), CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
 
             //Assert
             Assert.AreEqual(1, commands.Count);
@@ -77,7 +77,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
 
             // Act
-            var commands = DiffGenerator.GetDiffCommands(string.Empty, CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+            var commands = DiffGenerator.GetDiffCommands(new HashSet<string>(), CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
 
             //Assert
             Assert.AreEqual(1, commands.Count);
@@ -153,7 +153,80 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
 
             // Act
-            //var commands = DiffGenerator.GetDiffCommands(string.Empty, CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+            var commands = DiffGenerator.GetDiffCommands(new HashSet<string>(targetItems.Select(x => (x as QuickContentDataItem).ItemID)), CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+
+            //Assert
+            Assert.AreEqual(1, commands.Count);
+            Assert.AreEqual(1, commands.Count(x => x is DeleteItemCommand));
+        }
+    
+        [Test]
+        public void ChangedUnicornSerializationNameAndDeletionTestNew()
+        {
+            //Source dataset, a template with 2 fields. Serialized to a unicorn setting named Unicorn1
+            var sourceItems = new List<IDataItem>();
+            sourceItems.Add(new QuickContentDataItem("C:\\Source", "Unicorn1", "Template 1.yml", 
+                new SyncItem() {
+                    ID = "2a54b494-68fe-44f6-85d9-88a3b57cf689",
+                    TemplateID = "ab86861a-6030-46c5-b394-e8f99e8b87db",
+                    ParentID = "3C1715FE-6A13-4FCF-845F-DE308BA9741D",
+                    ItemPath = "/sitecore/Templates/Template 1" }, true));
+            sourceItems.Add(new QuickContentDataItem("C:\\Source", "Unicorn1\\Template 1", "Section 1.yml",
+                new SyncItem()
+                {
+                    ID = "79a314b1-82ad-4733-bb82-92cc62306c31",
+                    TemplateID = "e269fbb5-3750-427a-9149-7aa950b49301",
+                    ParentID = "2a54b494-68fe-44f6-85d9-88a3b57cf689",
+                    ItemPath = "/sitecore/Templates/Template 1/Section 1"
+                }, true));
+            sourceItems.Add(new QuickContentDataItem("C:\\Source", "Unicorn1\\Template 1\\Section 1", "Field1.yml",
+                new SyncItem()
+                {
+                    ID = "dcfcf4d9-6fed-4f16-a8a3-acf22188dd74",
+                    TemplateID = "455a3e98-a627-4b40-8035-e683a0331ac7",
+                    ParentID = "79a314b1-82ad-4733-bb82-92cc62306c31",
+                    ItemPath = "/sitecore/Templates/Template 1/Section 1/Field1"
+                }, true));
+            sourceItems.Add(new QuickContentDataItem("C:\\Source", "Unicorn1\\Template 1\\Section 1", "Field2.yml",
+                new SyncItem()
+                {
+                    ID = "dcfcf4d9-6fed-4f16-a8a3-acf22188dd73",
+                    TemplateID = "455a3e98-a627-4b40-8035-e683a0331ac7",
+                    ParentID = "79a314b1-82ad-4733-bb82-92cc62306c31",
+                    ItemPath = "/sitecore/Templates/Template 1/Section 1/Field2"
+                }, true));
+
+            //Target dataset, same template, 1 field removed. Serialized to a unicorn setting named Unicorn2
+            var targetItems = new List<IDataItem>();
+            targetItems.Add(new QuickContentDataItem("C:\\Target", "Unicorn2", "Template 1.yml",
+                new SyncItem()
+                {
+                    ID = "2a54b494-68fe-44f6-85d9-88a3b57cf689",
+                    TemplateID = "ab86861a-6030-46c5-b394-e8f99e8b87db",
+                    ParentID = "3C1715FE-6A13-4FCF-845F-DE308BA9741D",
+                    ItemPath = "/sitecore/Templates/Template 1"
+                }, true));
+            targetItems.Add(new QuickContentDataItem("C:\\Target", "Unicorn2\\Template 1", "Section 1.yml",
+                new SyncItem()
+                {
+                    ID = "79a314b1-82ad-4733-bb82-92cc62306c31",
+                    TemplateID = "e269fbb5-3750-427a-9149-7aa950b49301",
+                    ParentID = "2a54b494-68fe-44f6-85d9-88a3b57cf689",
+                    ItemPath = "/sitecore/Templates/Template 1/Section 1"
+                }, true));
+            targetItems.Add(new QuickContentDataItem("C:\\Target", "Unicorn2\\Template 1\\Section 1", "Field1.yml",
+                new SyncItem()
+                {
+                    ID = "dcfcf4d9-6fed-4f16-a8a3-acf22188dd74",
+                    TemplateID = "455a3e98-a627-4b40-8035-e683a0331ac7",
+                    ParentID = "79a314b1-82ad-4733-bb82-92cc62306c31",
+                    ItemPath = "/sitecore/Templates/Template 1/Section 1/Field1"
+                }, true));
+
+            var sourceDataIterator = new TestDataIterator(sourceItems);
+            var targetDataIterator = new TestDataIterator(targetItems);
+
+            // Act
             var commands = NewDiffGenerator.GetCommands(sourceDataIterator, targetDataIterator);
 
             //Assert
@@ -161,8 +234,6 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             Assert.AreEqual(1, commands.Count(x => x is DeleteItemCommand));
         }
     }
-
-
 
     public class TestDataIterator : IDataIterator
     {

@@ -26,12 +26,13 @@ namespace Sitecore.Courier
       IDataIterator targetDataIterator = targetManager.ItemIterator;
 
       var engine = new DataEngine();
-      var commands = GetDiffCommands(targetPath, collisionBehavior, sourceDataIterator, targetDataIterator, engine);
+      var targetItemIDs = GetItemIDs(targetPath);
+      var commands = GetDiffCommands(targetItemIDs, collisionBehavior, sourceDataIterator, targetDataIterator, engine);
       engine.ProcessCommands(ref commands);
       return commands;
     }
 
-    public static List<ICommand> GetDiffCommands(string targetPath, CollisionBehavior collisionBehavior,
+    public static List<ICommand> GetDiffCommands(HashSet<string> targetItemIDs, CollisionBehavior collisionBehavior,
       IDataIterator sourceDataIterator, IDataIterator targetDataIterator, DataEngine engine)
     {
       var commands = new List<ICommand>();
@@ -46,7 +47,6 @@ namespace Sitecore.Courier
             Added = a,
             Deleted = deleteCommands.FirstOrDefault(d => d.ItemID == a.ItemID)
           }).Where(u => u.Deleted != null).ToList();
-      var targetItemIDs = GetItemIDs(targetPath);
       foreach (var command in shouldBeUpdateCommands)
       {
         commands.AddRange(command.Deleted.GenerateUpdateCommand(command.Added));
@@ -57,8 +57,9 @@ namespace Sitecore.Courier
         //if the itempath of a delete command starts with this delete command, it will be moved along to the new node, not deleted, just leave it alone
         //but we will skip items which are not in the target folder
         commands.RemoveAll(c =>
-          c is DeleteItemCommand && ((DeleteItemCommand) c).ItemPath.StartsWith(command.Deleted.ItemPath) &&
-          !targetItemIDs.Contains(((DeleteItemCommand) c).ItemID));
+          c is DeleteItemCommand && 
+          ((DeleteItemCommand) c).ItemPath.StartsWith(command.Deleted.ItemPath) &&
+          targetItemIDs.Contains(((DeleteItemCommand) c).ItemID));
       }
 
       commands.ForEach(_ => _.CollisionBehavior = collisionBehavior);
