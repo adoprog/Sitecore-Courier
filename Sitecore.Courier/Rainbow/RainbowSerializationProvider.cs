@@ -16,6 +16,7 @@ namespace Sitecore.Courier.Rainbow
     public class RainbowSerializationProvider : BaseDataProcessor, IDataProvider
     {
         public static bool Enabled = false;
+        public static bool IncludeFiles = false;
         private readonly string _name;
         private readonly YamlSerializationFormatter _formatter;
 
@@ -61,7 +62,19 @@ namespace Sitecore.Courier.Rainbow
 
         private void InitStack()
         {
+          if (string.IsNullOrEmpty(_rootPath))
+          {
+            _allFiles = new string[0];
+          }
+
+          if (RainbowSerializationProvider.IncludeFiles)
+          {
             _allFiles = Directory.GetFiles(_rootPath, "*", SearchOption.AllDirectories);
+          }
+          else
+          {
+            _allFiles = Directory.GetFiles(_rootPath, "*" + _formatter.FileExtension, SearchOption.AllDirectories);
+          }
         }
 
         public IDataItem Next()

@@ -26,8 +26,11 @@ namespace Sitecore.Courier.Runner
                 Console.WriteLine("Output: {0}", options.Output);
                 Console.WriteLine("Collision behavior: {0}", options.CollisionBehavior);
                 Console.WriteLine("Use Rainbow: {0}", options.UseRainbow);
+                Console.WriteLine("Include Files: {0}", options.IncludeFiles);
                 Console.WriteLine("Configuration: {0}", options.Configuration);
                 Console.WriteLine("Path to project file: {0}", options.ScProjFilePath);
+
+                SanitizeOptions(options);
 
                 if (ExclusionHandler.HasValidExclusions(options.Configuration, options.ScProjFilePath))
                 {
@@ -38,6 +41,7 @@ namespace Sitecore.Courier.Runner
                 }
 
                 RainbowSerializationProvider.Enabled = options.UseRainbow;
+                RainbowSerializationProvider.IncludeFiles = options.IncludeFiles;
                 
                 List<ICommand> commands = null;
                 if (options.UseNewDiffGenerator)
@@ -61,6 +65,24 @@ namespace Sitecore.Courier.Runner
             {
                 Console.WriteLine(options.GetUsage());
             }
+        }
+
+        private static void SanitizeOptions(Options options)
+        {
+          if (options.Source != null)
+          {
+            options.Source = options.Source.Replace("'", string.Empty);
+          }
+
+          if (options.Target != null)
+          {
+            options.Target = options.Target.Replace("'", string.Empty);
+          }
+
+          if (options.Output != null)
+          {
+            options.Output = options.Output.Replace("'", string.Empty);
+          }
         }
     }
 }
