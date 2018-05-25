@@ -16,7 +16,7 @@ You can download it [here](https://github.com/adoprog/Sitecore-Courier/releases)
 
 If you're using VSTS, you can install the module from the Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=adoprog.sitecore-courier
 
-You can also install the module from the official [PowerShell Gallery](https://www.powershellgallery.com/packages/Sitecore.Courier/1.0). Simply type **Install-Module -Name Sitecore.Courier** from the elevated PowerShell console and you'll be able to use New-CourierPackage cmdlet.
+You can also install the module from the official [PowerShell Gallery](https://www.powershellgallery.com/packages/Sitecore.Courier). Simply type **Install-Module -Name Sitecore.Courier** from the elevated PowerShell console and you'll be able to use New-CourierPackage cmdlet.
 
 *New-CourierPackage -Target ..\src -Output .\package.update -SerializationProvider "Rainbow"*
 
