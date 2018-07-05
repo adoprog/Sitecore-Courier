@@ -35,6 +35,9 @@ namespace Sitecore.Courier
     [Parameter(Mandatory = false, Position = 4, ParameterSetName = ParameterSets.DEFAULT)]
     public CollisionBehavior CollisionBehavior { get; set; }
 
+    [Parameter(Mandatory = false, Position = 5, ParameterSetName = ParameterSets.DEFAULT)]
+    public bool IncludeFiles { get; set; }
+
     protected override void BeginProcessing()
     {
       AppDomain.CurrentDomain.SetData("APP_CONFIG_FILE", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Sitecore.Courier.dll.config"));
@@ -45,8 +48,10 @@ namespace Sitecore.Courier
       Console.WriteLine("Output: {0}", Output);
       Console.WriteLine("SerializationProvider: {0}", SerializationProvider);
       Console.WriteLine("CollisionBehavior: {0}", CollisionBehavior);
+      Console.WriteLine("IncludeFiles: {0}", IncludeFiles);
 
       RainbowSerializationProvider.Enabled = SerializationProvider == SerializationProvider.Rainbow;
+      RainbowSerializationProvider.IncludeFiles = IncludeFiles;
 
       var diff = new DiffInfo(
         DiffGenerator.GetDiffCommands(Source, Target, CollisionBehavior),
