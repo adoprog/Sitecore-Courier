@@ -72,6 +72,12 @@
       <HintPath>..\packages\MicroCHAP.1.2.2.2\lib\net45\MicroCHAP.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.1.1\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Rainbow, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rainbow.Core.2.1.1\lib\net452\Rainbow.dll</HintPath>
     </Reference>
@@ -121,7 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewDIffGenerator.cs" />
+    <Compile Include="DiffGenerator.cs" />
     <Compile Include="Iterators\EmptyIterator.cs" />
     <Compile Include="NewCourierPackageCommand.cs" />
     <Compile Include="Rainbow\Configuration\FieldFormatterCollection.cs" />
@@ -133,7 +139,6 @@
     <Compile Include="Rainbow\RainbowIterator.cs" />
     <Compile Include="Rainbow\RainbowSerializationProvider.cs" />
     <Compile Include="ItemUtils.cs" />
-    <Compile Include="DIffGenerator.cs" />
     <Compile Include="FileCommandsFilter.cs" />
     <Compile Include="FileSystemProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

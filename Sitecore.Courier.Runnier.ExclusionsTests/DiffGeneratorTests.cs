@@ -4,7 +4,6 @@ using System.Linq;
 using Moq;
 using NUnit.Framework;
 using Sitecore.Data.Serialization.ObjectModel;
-using Sitecore.Update;
 using Sitecore.Update.Commands;
 using Sitecore.Update.Data;
 using Sitecore.Update.Interfaces;
@@ -28,7 +27,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
 
             // Act
-            var commands = DiffGenerator.GetDiffCommands(new HashSet<string>(), CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+            var commands = DiffGenerator.GetCommands(sourceDataIterator, targetDataIterator);
 
             //Assert
             Assert.AreEqual(1, commands.Count);
@@ -51,7 +50,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
 
             // Act
-            var commands = DiffGenerator.GetDiffCommands(new HashSet<string>(), CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+            var commands = DiffGenerator.GetCommands(sourceDataIterator, targetDataIterator);
 
             //Assert
             Assert.AreEqual(1, commands.Count);
@@ -77,7 +76,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
 
             // Act
-            var commands = DiffGenerator.GetDiffCommands(new HashSet<string>(), CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+            var commands = DiffGenerator.GetCommands(sourceDataIterator, targetDataIterator);
 
             //Assert
             Assert.AreEqual(1, commands.Count);
@@ -153,7 +152,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
 
             // Act
-            var commands = DiffGenerator.GetDiffCommands(new HashSet<string>(targetItems.Select(x => (x as QuickContentDataItem).ItemID)), CollisionBehavior.Force, sourceDataIterator, targetDataIterator, engineMock.Object);
+            var commands = DiffGenerator.GetCommands(sourceDataIterator, targetDataIterator);
 
             //Assert
             Assert.AreEqual(1, commands.Count);
@@ -227,7 +226,7 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var targetDataIterator = new TestDataIterator(targetItems);
 
             // Act
-            var commands = NewDiffGenerator.GetCommands(sourceDataIterator, targetDataIterator);
+            var commands = DiffGenerator.GetCommands(sourceDataIterator, targetDataIterator);
 
             //Assert
             Assert.AreEqual(1, commands.Count);

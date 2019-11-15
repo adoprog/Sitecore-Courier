@@ -50,15 +50,7 @@ namespace Sitecore.Courier.Runner
                 RainbowSerializationProvider.Enabled = options.UseRainbow;
                 RainbowSerializationProvider.IncludeFiles = options.IncludeFiles;
                 
-                List<ICommand> commands = null;
-                if (options.UseNewDiffGenerator)
-                {
-                    commands = NewDiffGenerator.GetDiffCommands(options.Source, options.Target, options.CollisionBehavior);
-                }
-                else
-                {
-                    commands = DiffGenerator.GetDiffCommands(options.Source, options.Target, options.IncludeSecurity, version, options.CollisionBehavior);
-                }
+                var commands = DiffGenerator.GetDiffCommands(options.Source, options.Target, options.IncludeSecurity, version, options.CollisionBehavior);
 
                 var diff = new DiffInfo(
                     commands,
