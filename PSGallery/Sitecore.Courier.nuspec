@@ -24,11 +24,15 @@
     <file src="Rainbow.Storage.Yaml.dll" target="Rainbow.Storage.Yaml.dll" />
     <file src="Sitecore.Courier.dll" target="Sitecore.Courier.dll" />
     <file src="Sitecore.Courier.dll.config" target="Sitecore.Courier.dll.config" />
-    <file src="Sitecore.Courier.pdb" target="Sitecore.Courier.pdb" />
+    <file src="Sitecore.Courier.nuspec" target="Sitecore.Courier.nuspec" />
+    <file src="Sitecore.Courier.PackageInstallPostProcessor.dll" target="Sitecore.Courier.PackageInstallPostProcessor.dll" />
+    <file src="Sitecore.Courier.PackageInstallPostProcessor.pdb" target="Sitecore.Courier.PackageInstallPostProcessor.pdb" />
     <file src="Sitecore.Courier.psd1" target="Sitecore.Courier.psd1" />
     <file src="Sitecore.Courier.psm1" target="Sitecore.Courier.psm1" />
     <file src="Sitecore.Kernel.dll" target="Sitecore.Kernel.dll" />
     <file src="Sitecore.Kernel.xml" target="Sitecore.Kernel.xml" />
+    <file src="Sitecore.Logging.dll" target="Sitecore.Logging.dll" />
+    <file src="Sitecore.Logging.xml" target="Sitecore.Logging.xml" />
     <file src="Sitecore.Update.dll" target="Sitecore.Update.dll" />
     <file src="Sitecore.Update.xml" target="Sitecore.Update.xml" />
     <file src="Sitecore.Zip.dll" target="Sitecore.Zip.dll" />
