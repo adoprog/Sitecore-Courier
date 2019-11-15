@@ -20,6 +20,9 @@ namespace Sitecore.Courier
       public const string DEFAULT = "default";
     }
 
+    private const string PostDeployDll = "Sitecore.Courier.PackageInstallPostProcessor.dll";
+    private const string PostStep = "Sitecore.Courier.PackageInstallPostProcessor.DoPostDeployActions, Sitecore.Courier.PackageInstallPostProcessor";
+
     [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSets.DEFAULT)]
     public string Source { get; set; }
 
@@ -38,31 +41,44 @@ namespace Sitecore.Courier
     [Parameter(Mandatory = false, Position = 5, ParameterSetName = ParameterSets.DEFAULT)]
     public bool IncludeFiles { get; set; }
 
-    protected override void BeginProcessing()
-    {
-      AppDomain.CurrentDomain.SetData("APP_CONFIG_FILE", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Sitecore.Courier.dll.config"));
-      ResetConfigMechanism();
+    [Parameter(Mandatory = false, Position = 6, ParameterSetName = ParameterSets.DEFAULT)]
+    public bool IncludeSecurity { get; set; }
 
-      Console.WriteLine("Source: {0}", Source);
-      Console.WriteLine("Target: {0}", Target);
-      Console.WriteLine("Output: {0}", Output);
-      Console.WriteLine("SerializationProvider: {0}", SerializationProvider);
-      Console.WriteLine("CollisionBehavior: {0}", CollisionBehavior);
-      Console.WriteLine("IncludeFiles: {0}", IncludeFiles);
+      protected override void BeginProcessing()
+      {
+          var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+          AppDomain.CurrentDomain.SetData("APP_CONFIG_FILE", Path.Combine(currentDirectory, "Sitecore.Courier.dll.config"));
+          ResetConfigMechanism();
+          string version = Guid.NewGuid().ToString();
 
-      RainbowSerializationProvider.Enabled = SerializationProvider == SerializationProvider.Rainbow;
-      RainbowSerializationProvider.IncludeFiles = IncludeFiles;
+          Console.WriteLine("Source: {0}", Source);
+          Console.WriteLine("Target: {0}", Target);
+          Console.WriteLine("Output: {0}", Output);
+          Console.WriteLine("SerializationProvider: {0}", SerializationProvider);
+          Console.WriteLine("CollisionBehavior: {0}", CollisionBehavior);
+          Console.WriteLine("IncludeFiles: {0}", IncludeFiles);
 
-      var diff = new DiffInfo(
-        DiffGenerator.GetDiffCommands(Source, Target, CollisionBehavior),
-        "Sitecore Courier Package",
-        string.Empty,
-        string.Format("Diff between serialization folders '{0}' and '{1}'.", Source, Target));
+          RainbowSerializationProvider.Enabled = SerializationProvider == SerializationProvider.Rainbow;
+          RainbowSerializationProvider.IncludeFiles = IncludeFiles;
 
-      PackageGenerator.GeneratePackage(diff, string.Empty, Output);
-    }
+          var diff = new DiffInfo(
+              DiffGenerator.GetDiffCommands(Source, Target, IncludeSecurity, version, CollisionBehavior),
+              "Sitecore Courier Package",
+              string.Empty,
+              string.Format("Diff between serialization folders '{0}' and '{1}'.", Source, Target));
 
-    private static void ResetConfigMechanism()
+          if (IncludeSecurity)
+          {
+              diff.Commands.Add(new PostStepFileSystemDataItem(currentDirectory, string.Empty, PostDeployDll)
+                  .GenerateAddCommand().FirstOrDefault());
+              diff.PostStep = PostStep;
+              diff.Version = version;
+          }
+
+          PackageGenerator.GeneratePackage(diff, string.Empty, Output);
+      }
+
+      private static void ResetConfigMechanism()
     {
       typeof(ConfigurationManager)
         .GetField("s_initState", BindingFlags.NonPublic |

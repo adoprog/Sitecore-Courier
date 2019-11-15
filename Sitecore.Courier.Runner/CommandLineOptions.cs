@@ -16,9 +16,9 @@ namespace Sitecore.Courier.Runner
         public string Target { get; set; }
 
         [Option('o', "output", Required = true,
-          HelpText = "Location of update package")]
+            HelpText = "Location of update package")]
         public string Output { get; set; }
-        
+
         [Option('b', "behavior", Required = false, DefaultValue = CollisionBehavior.Undefined,
           HelpText = "The collision behavior (default, force or skip) for the update package.")]
         public CollisionBehavior CollisionBehavior { get; set; }
@@ -38,6 +38,10 @@ namespace Sitecore.Courier.Runner
         [Option('f', "files", Required = false,
           HelpText = "Include files when using Rainbow serializer")]
         public bool IncludeFiles { get; set; }
+
+        [Option('i', "includesecurity", Required = false,
+            HelpText = "Include security - roles and users. Only supported when using Rainbow serializer")]
+        public bool IncludeSecurity { get; set; }
 
         [Option('n', "newdiffgenerator", Required = false,
           HelpText = "Use new diffgenerator")]

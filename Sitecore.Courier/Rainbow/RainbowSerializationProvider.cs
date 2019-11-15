@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 using Rainbow.Storage.Yaml;
 using Sitecore.Courier.Rainbow.Configuration;
 using Sitecore.Update;
@@ -42,68 +41,6 @@ namespace Sitecore.Courier.Rainbow
         public IDataIterator GetIterator(string rootPath, IList<Filter> filters)
         {
             return new RainbowIterator(rootPath, _formatter);
-        }
-    }
-
-    public class RainbowIterator : IDataIterator
-    {
-        private readonly string _rootPath;
-        private readonly YamlSerializationFormatter _formatter;
-        private string[] _allFiles;
-        private int _currentPosition;
-
-        public RainbowIterator(string rootPath, YamlSerializationFormatter formatter)
-        {
-            _rootPath = Path.GetFullPath(rootPath);
-            _formatter = formatter;
-            _currentPosition = 0;
-            InitStack();
-        }
-
-        private void InitStack()
-        {
-          if (string.IsNullOrEmpty(_rootPath))
-          {
-            _allFiles = new string[0];
-          }
-
-          if (RainbowSerializationProvider.IncludeFiles)
-          {
-            _allFiles = Directory.GetFiles(_rootPath, "*", SearchOption.AllDirectories);
-          }
-          else
-          {
-            _allFiles = Directory.GetFiles(_rootPath, "*" + _formatter.FileExtension, SearchOption.AllDirectories);
-          }
-        }
-
-        public IDataItem Next()
-        {
-            if (_allFiles == null || _allFiles.Length == 0 || _allFiles.Length == _currentPosition)
-                return null;
-            var file = _allFiles[_currentPosition];
-            _currentPosition++;
-            var dir = Path.GetDirectoryName(file);
-            var name = Path.GetFileName(file);
-            var relative = _rootPath.Length == dir.Length ? string.Empty : dir.Substring(_rootPath.Length);
-
-            if (file.EndsWith(_formatter.FileExtension))
-            {
-              var item = new RainbowDataItem(
-                  _rootPath,
-                  relative,
-                  name,
-                  _formatter);
-
-              if (item.HasItem)
-              {
-                  return item;
-              }
-              
-              return Next();
-            }
-
-            return ItemUtils.GetFileSystemDataItem(_rootPath, new FileInfo(file));
         }
     }
 }

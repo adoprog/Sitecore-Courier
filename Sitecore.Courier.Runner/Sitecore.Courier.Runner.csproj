@@ -107,6 +107,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Courier.PackageInstallPostProcessor\Sitecore.Courier.PackageInstallPostProcessor.csproj">
+      <Project>{e011446d-e66f-46ad-852f-b204ee6cf85a}</Project>
+      <Name>Sitecore.Courier.PackageInstallPostProcessor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Courier.ShellExtensions\Sitecore.Courier.ShellExtensions.csproj">
       <Project>{c6d6ea4f-3536-4c13-8dad-c9c0c6d02ee3}</Project>
       <Name>Sitecore.Courier.ShellExtensions</Name>

@@ -14,8 +14,14 @@ namespace Sitecore.Courier
   /// </summary>
   public class DiffGenerator
   {
-    public static List<ICommand> GetDiffCommands(string sourcePath, string targetPath, CollisionBehavior collisionBehavior = CollisionBehavior.Undefined)
+    public static bool IncludeSecurity { get; set; }
+    public static string Version { get; set; }
+
+    public static List<ICommand> GetDiffCommands(string sourcePath, string targetPath, bool includeSecurity, string version, CollisionBehavior collisionBehavior = CollisionBehavior.Undefined)
     {
+      IncludeSecurity = includeSecurity;
+      Version = version;
+
       var sourceManager = Factory.Instance.GetSourceDataManager();
       var targetManager = Factory.Instance.GetTargetDataManager();
 
