@@ -67,6 +67,9 @@
     <Reference Include="Sitecore.Update, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sitecore.Update.9.2.0\lib\net471\Sitecore.Update.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Zip, Version=12.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Zip.9.2.0\lib\net471\Sitecore.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="sysglobl" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
