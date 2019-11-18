@@ -4,7 +4,7 @@ using Unicorn.Roles.Model;
 
 namespace ConsoleApp1
 {
-    class RainbowSecuritySqlGenerator
+    public class RainbowSecuritySqlGenerator
     {
         public string GenerateAddUserStatements(SyncUser user)
         {

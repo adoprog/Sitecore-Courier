@@ -14,12 +14,11 @@ using Unicorn.Roles.Formatting;
 using Unicorn.Users.Data;
 using Unicorn.Users.Formatting;
 
-namespace Sitecore.Courier
+namespace Sitecore.Courier.Cmdlets
 {
-    [Cmdlet(VerbsCommon.New, "RainbowSecurityScript", DefaultParameterSetName = "default", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.New, "CourierSecurityPackage", DefaultParameterSetName = "default", SupportsShouldProcess = true)]
     [OutputType(new Type[] {typeof(string)})]
-    [Alias("New-RainbowSecurityScript")]
-    public class NewRainbowSecurityScript : Cmdlet
+    public class NewCourierSecurityPackageCommand : Cmdlet
     {
         public static class ParameterSets
         {
@@ -98,8 +97,11 @@ namespace Sitecore.Courier
                     }
                 }
 
-                Console.WriteLine(result);
-                File.WriteAllText(Output, result.ToString());
+                var sqlScriptTemp = Path.GetTempPath() + Guid.NewGuid();
+                Console.WriteLine("Dumping generated SQL script to: " + sqlScriptTemp);
+                File.WriteAllText(sqlScriptTemp, result.ToString());
+                var builder = new DacPacBuilder();
+                builder.ConvertToDacPac(sqlScriptTemp, Output);
             }
             catch (Exception ex)
             {

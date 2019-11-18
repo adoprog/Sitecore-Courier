@@ -8,7 +8,7 @@ using Sitecore.Courier.Rainbow;
 using Sitecore.Update;
 using Sitecore.Update.Engine;
 
-namespace Sitecore.Courier
+namespace Sitecore.Courier.Cmdlets
 {
     [Cmdlet(VerbsCommon.New, "CourierPackage", DefaultParameterSetName = "default", SupportsShouldProcess = true)]
     [OutputType(new Type[] {typeof(string)})]
