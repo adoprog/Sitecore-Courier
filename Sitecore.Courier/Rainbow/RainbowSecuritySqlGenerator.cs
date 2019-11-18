@@ -70,7 +70,7 @@ namespace ConsoleApp1
             stringBuilder.AppendLine("DECLARE @RoleId nvarchar(256)");
             stringBuilder.AppendLine("SELECT TOP 1 @RoleId = [RoleId] FROM [aspnet_Roles] WHERE [RoleName] = @RoleName");
 
-            stringBuilder.AppendLine("IF NOT EXISTS (SELECT TOP 1 [RoleId] FROM [aspnet_UsersInRoles] WHERE [UserId] = @UserId AND [RoleId] = @RoleId) AND @RoleId <> NULL");
+            stringBuilder.AppendLine("IF NOT EXISTS (SELECT TOP 1 [RoleId] FROM [aspnet_UsersInRoles] WHERE [UserId] = @UserId AND [RoleId] = @RoleId) AND @RoleId IS NOT NULL");
             stringBuilder.AppendLine("BEGIN");
             stringBuilder.AppendLine("    INSERT INTO [aspnet_UsersInRoles] (RoleId, UserId) VALUES (@RoleId, @UserId)");
             stringBuilder.AppendLine("END");
