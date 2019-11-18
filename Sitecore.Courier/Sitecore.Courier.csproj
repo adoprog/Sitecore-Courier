@@ -133,6 +133,7 @@
   <ItemGroup>
     <Compile Include="DiffGenerator.cs" />
     <Compile Include="Iterators\EmptyIterator.cs" />
+    <Compile Include="NewRainbowSecurityScript.cs" />
     <Compile Include="NewCourierPackageCommand.cs" />
     <Compile Include="Rainbow\Configuration\FieldFormatterCollection.cs" />
     <Compile Include="Rainbow\Configuration\FieldFormatterElement.cs" />
@@ -140,7 +141,9 @@
     <Compile Include="Rainbow\Configuration\RainbowConfigSection.cs" />
     <Compile Include="Rainbow\Configuration\SerializationFormatterElement.cs" />
     <Compile Include="Rainbow\RainbowDataItem.cs" />
+    <Compile Include="Rainbow\RainbowItemExtensions.cs" />
     <Compile Include="Rainbow\RainbowIterator.cs" />
+    <Compile Include="Rainbow\RainbowSecuritySqlGenerator.cs" />
     <Compile Include="Rainbow\RainbowSerializationProvider.cs" />
     <Compile Include="ItemUtils.cs" />
     <Compile Include="FileCommandsFilter.cs" />

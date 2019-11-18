@@ -51,13 +51,7 @@ namespace Sitecore.Courier.Rainbow
 
             if (file.EndsWith(itemFormatter.FileExtension))
             {
-                string itemType = string.Empty;
-                var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
-                using (var sr = new StreamReader(fs))
-                {
-                    sr.ReadLine();
-                    itemType = sr.ReadLine();
-                }
+                string itemType = RainbowItemExtensions.GetItemType(file);
 
                 if (itemType.StartsWith(ItemPrefix))
                 {
