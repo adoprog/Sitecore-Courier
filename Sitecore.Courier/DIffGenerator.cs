@@ -97,7 +97,7 @@ namespace Sitecore.Courier
                     catch (ArgumentException)
                     {
                         //This should not happen unless the dataset is corrupted, which would mean it would not give a proper result
-                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine($"Two items got the same unique key. This suggests invalid data. Check {GetItemPath(item)} vs {GetItemPath(dict[key])}");
                         Console.ResetColor();
                     }
