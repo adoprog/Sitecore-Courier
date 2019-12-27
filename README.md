@@ -53,6 +53,8 @@ Sample Habitat script here: https://github.com/adoprog/Habitat/blob/master/scrip
 
 -f - Add if you want to include files to the package when using Rainbow serialization format
 
+-i - Include security - roles and users. Only supported when using Rainbow serializer
+
 ## Using Windows shell extension
 
 Sitecore Courier can now be installed via Chocolatey: https://chocolatey.org/packages/sitecore-courier
