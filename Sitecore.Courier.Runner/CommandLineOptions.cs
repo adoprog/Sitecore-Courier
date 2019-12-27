@@ -43,10 +43,6 @@ namespace Sitecore.Courier.Runner
             HelpText = "Include security - roles and users. Only supported when using Rainbow serializer")]
         public bool IncludeSecurity { get; set; }
 
-        [Option('n', "newdiffgenerator", Required = false,
-          HelpText = "Use new diffgenerator")]
-        public bool UseNewDiffGenerator { get; set; }
-
         [ParserState]
         public IParserState LastParserState { get; set; }
 
