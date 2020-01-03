@@ -115,6 +115,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Courier.PackageInstallPostProcessor\Sitecore.Courier.PackageInstallPostProcessor.csproj">
+      <Project>{e011446d-e66f-46ad-852f-b204ee6cf85a}</Project>
+      <Name>Sitecore.Courier.PackageInstallPostProcessor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Courier\Sitecore.Courier.csproj">
       <Project>{4745ff1f-4d3f-4fd6-984b-667af2258774}</Project>
       <Name>Sitecore.Courier</Name>
