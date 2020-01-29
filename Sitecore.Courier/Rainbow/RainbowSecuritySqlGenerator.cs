@@ -20,6 +20,7 @@ namespace ConsoleApp1
             stringBuilder.AppendLine("DECLARE @UserId nvarchar(256)");
             stringBuilder.AppendLine("SELECT TOP 1 @UserId = [UserId] FROM [aspnet_Users] WHERE [UserName] = @UserName");
             stringBuilder.AppendLine("UPDATE [aspnet_Membership] SET [PasswordFormat] = '1' WHERE UserId = @UserId");
+            stringBuilder.AppendLine("UPDATE [aspnet_Membership] SET [Comment] = '' WHERE UserId = @UserId");
 
             stringBuilder.AppendLine("INSERT [dbo].[aspnet_Profile] ([UserId], [PropertyNames], [PropertyValuesString], [PropertyValuesBinary], [LastUpdatedDate])");
             stringBuilder.AppendLine(" VALUES (@UserId,");
