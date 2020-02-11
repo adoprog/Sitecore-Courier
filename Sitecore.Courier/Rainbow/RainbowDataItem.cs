@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using Rainbow.Model;
 using Rainbow.Storage.Yaml;
+using Sitecore.Data;
 using Sitecore.Data.Serialization.ObjectModel;
 
 namespace Sitecore.Courier.Rainbow
@@ -18,6 +19,8 @@ namespace Sitecore.Courier.Rainbow
     /// </summary>
     public class RainbowDataItem : QuickContentDataItem
     {
+        private const string RevisionFieldId = "{8cdc337e-a112-42fb-bbb4-4143751e123f}";
+
         /// <summary>
         /// The _formatter
         /// </summary>
@@ -139,6 +142,11 @@ namespace Sitecore.Courier.Rainbow
                     {
                         syncVersion.AddField(field.FieldId.ToString("B"), null/*name*/, null/*key?*/, field.Value, true);
                     }
+                }
+
+                if (RainbowSerializationProvider.EnsureRevision && !syncVersion.Fields.Any(x => x.FieldID == RevisionFieldId))
+                {
+                    syncVersion.AddField(RevisionFieldId, null/*name*/, null /*key?*/, Guid.NewGuid().ToString().ToLowerInvariant(), true);
                 }
             }
 
