@@ -35,10 +35,6 @@ namespace Sitecore.Courier.Runner
           HelpText = "Use Rainbow serializer")]
         public bool UseRainbow { get; set; }
 
-        [Option('e', "ensurerevision", Required = false,
-            HelpText = "Ensure revision")]
-        public bool EnsureRevision { get; set; }
-
         [Option('f', "files", Required = false,
           HelpText = "Include files when using Rainbow serializer")]
         public bool IncludeFiles { get; set; }
