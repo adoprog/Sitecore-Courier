@@ -5,11 +5,15 @@
 // Assembly location: C:\github\Sitecore-Courier\Sitecore.Courier.Runner\bin\Debug\Sitecore.Update.dll
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Rainbow.Model;
 using Rainbow.Storage.Yaml;
 using Sitecore.Data.Serialization.ObjectModel;
+using Sitecore.Update.Commands;
+using Sitecore.Update.Interfaces;
+using Sitecore.Update.Items;
 
 namespace Sitecore.Courier.Rainbow
 {
@@ -18,6 +22,9 @@ namespace Sitecore.Courier.Rainbow
     /// </summary>
     public class RainbowDataItem : QuickContentDataItem
     {
+        private const string RevisionFieldId = "{8CDC337E-A112-42FB-BBB4-4143751E123F}";
+        private const string RevisionFieldName = "_Revision";
+
         /// <summary>
         /// The _formatter
         /// </summary>
@@ -54,6 +61,40 @@ namespace Sitecore.Courier.Rainbow
         protected override Guid GetFastId()
         {
             return GetItemMetaData().Id;
+        }
+
+        public override IList<ICommand> GenerateAddCommand()
+        {
+            var commands = base.GenerateAddCommand();
+            if (!RainbowSerializationProvider.EnsureRevision)
+            {
+                return commands;
+            }
+
+
+            foreach (var command in commands)
+            {
+                var addItemCommand = command as AddItemCommand;
+                if (addItemCommand == null)
+                {
+                    continue;
+                }
+
+                foreach (var data in addItemCommand.AddedItemData.Versions)
+                {
+                    if (data.Fields.Any(x => x.FieldId == RevisionFieldId)) continue;
+
+                    data.Fields.Add(new UpdateSyncField()
+                    {
+                        FieldId = RevisionFieldId,
+                        FieldValue = Guid.NewGuid().ToString().ToLowerInvariant(),
+                        FieldName = RevisionFieldName
+                    });
+
+                }
+            }
+
+            return commands;
         }
 
         /// <summary>

@@ -47,6 +47,9 @@ namespace Sitecore.Courier.Cmdlets
         [Parameter(Mandatory = false, Position = 6, ParameterSetName = ParameterSets.DEFAULT)]
         public bool IncludeSecurity { get; set; }
 
+        [Parameter(Mandatory = false, Position = 7, ParameterSetName = ParameterSets.DEFAULT)]
+        public bool EnsureRevision { get; set; }
+
         protected override void BeginProcessing()
         {
             try
@@ -66,6 +69,7 @@ namespace Sitecore.Courier.Cmdlets
 
                 RainbowSerializationProvider.Enabled = SerializationProvider == SerializationProvider.Rainbow;
                 RainbowSerializationProvider.IncludeFiles = IncludeFiles;
+                RainbowSerializationProvider.EnsureRevision = EnsureRevision;
 
                 var diff = new DiffInfo(
                     DiffGenerator.GetDiffCommands(Source, Target, IncludeSecurity, version, CollisionBehavior),

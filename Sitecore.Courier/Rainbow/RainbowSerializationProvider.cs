@@ -15,6 +15,7 @@ namespace Sitecore.Courier.Rainbow
     public class RainbowSerializationProvider : BaseDataProcessor, IDataProvider
     {
         public static bool Enabled = false;
+        public static bool EnsureRevision = false;
         public static bool IncludeFiles = false;
         private readonly string _name;
         private readonly YamlSerializationFormatter _formatter;

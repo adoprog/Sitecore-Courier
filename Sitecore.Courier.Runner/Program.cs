@@ -34,6 +34,7 @@ namespace Sitecore.Courier.Runner
                 Console.WriteLine("Include Security: {0}", options.IncludeSecurity);
                 Console.WriteLine("Include Files: {0}", options.IncludeFiles);
                 Console.WriteLine("Configuration: {0}", options.Configuration);
+                Console.WriteLine("Ensure Revision: {0}", options.EnsureRevision);
                 Console.WriteLine("Path to project file: {0}", options.ScProjFilePath);
 
                 string version = Guid.NewGuid().ToString();
@@ -49,7 +50,8 @@ namespace Sitecore.Courier.Runner
 
                 RainbowSerializationProvider.Enabled = options.UseRainbow;
                 RainbowSerializationProvider.IncludeFiles = options.IncludeFiles;
-                
+                RainbowSerializationProvider.EnsureRevision = options.EnsureRevision;
+
                 var commands = DiffGenerator.GetDiffCommands(options.Source, options.Target, options.IncludeSecurity, version, options.CollisionBehavior);
 
                 var diff = new DiffInfo(
