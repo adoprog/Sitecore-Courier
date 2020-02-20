@@ -23,7 +23,7 @@ namespace Sitecore.Courier.Rainbow
     public class RainbowDataItem : QuickContentDataItem
     {
         private const string RevisionFieldId = "{8CDC337E-A112-42FB-BBB4-4143751E123F}";
-        private const string RevisionFieldName = "_Revision";
+        private const string RevisionFieldName = "__Revision";
 
         /// <summary>
         /// The _formatter
