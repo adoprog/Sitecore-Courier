@@ -70,6 +70,7 @@ namespace Sitecore.Courier.Cmdlets
                 Console.WriteLine("SerializationProvider: {0}", SerializationProvider);
                 Console.WriteLine("CollisionBehavior: {0}", CollisionBehavior);
                 Console.WriteLine("IncludeFiles: {0}", IncludeFiles);
+                Console.WriteLine("DacPac: {0}", DacPac);
 
                 RainbowSerializationProvider.Enabled = SerializationProvider == SerializationProvider.Rainbow;
                 RainbowSerializationProvider.IncludeFiles = IncludeFiles;
