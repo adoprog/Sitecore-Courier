@@ -35,6 +35,10 @@ namespace Sitecore.Courier.Runner
           HelpText = "Use Rainbow serializer")]
         public bool UseRainbow { get; set; }
 
+        [Option('d', "dacpac", Required = false,
+          HelpText = "DacPac Output")]
+        public bool DacPac { get; set; }
+
         [Option('e', "ensurerevision", Required = false,
             HelpText = "Ensure revision")]
         public bool EnsureRevision { get; set; }

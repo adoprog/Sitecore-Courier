@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
+using Sitecore.Courier.DacPac;
 using Sitecore.Courier.Rainbow;
 using Sitecore.Update;
 using Sitecore.Update.Engine;
@@ -50,6 +51,9 @@ namespace Sitecore.Courier.Cmdlets
         [Parameter(Mandatory = false, Position = 7, ParameterSetName = ParameterSets.DEFAULT)]
         public bool EnsureRevision { get; set; }
 
+        [Parameter(Mandatory = false, Position = 8, ParameterSetName = ParameterSets.DEFAULT)]
+        public bool DacPac { get; set; }
+
         protected override void BeginProcessing()
         {
             try
@@ -85,7 +89,22 @@ namespace Sitecore.Courier.Cmdlets
                     diff.Version = version;
                 }
 
-                PackageGenerator.GeneratePackage(diff, string.Empty, Output);
+                if (DacPac)
+                {
+                  SqlConverter c = new SqlConverter();
+                  c.ConvertPackage(diff, Output);
+
+                  var builder = new DacPacBuilder();
+                  DirectoryInfo d = new DirectoryInfo(Output);
+                  foreach (var file in d.GetFiles("*.sql"))
+                  {
+                    builder.ConvertToDacPac(file.FullName, Path.Combine(file.DirectoryName, $"{file.Name}.dacpac"));
+                  }
+                }
+                else
+                {
+                  PackageGenerator.GeneratePackage(diff, string.Empty, Output);
+                }
             }
             catch (Exception ex)
             {

@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using Ionic.Zip;
 
-namespace Sitecore.Courier.Cmdlets
+namespace Sitecore.Courier.DacPac
 {
-    class DacPacBuilder
+    public class DacPacBuilder
     {
         private MemoryStream GenerateDacPac(string sqlScriptPath)
         {
             MemoryStream memoryStream = new MemoryStream();
-            using (MemoryStream memoryStream1 = new MemoryStream(Sitecore.Courier.Cmdlets.Properties.Resources.empty_dacpac))
+            using (MemoryStream memoryStream1 = new MemoryStream(Sitecore.Courier.Properties.Resources.empty_dacpac))
             {
                 using (ZipFile zipFiles = ZipFile.Read(memoryStream1))
                 {
