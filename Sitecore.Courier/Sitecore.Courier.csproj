@@ -65,6 +65,9 @@
     <Reference Include="Configy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Configy.1.0.0\lib\net45\Configy.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetZip">
+      <HintPath>..\Sitecore.Courier.Cmdlets\lib\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="Kamsar.WebConsole, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Kamsar.WebConsole.2.0.1\lib\net40\Kamsar.WebConsole.dll</HintPath>
     </Reference>
@@ -127,8 +130,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DacPac\DacPacBuilder.cs" />
     <Compile Include="DiffGenerator.cs" />
     <Compile Include="Iterators\EmptyIterator.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Rainbow\Configuration\FieldFormatterCollection.cs" />
     <Compile Include="Rainbow\Configuration\FieldFormatterElement.cs" />
     <Compile Include="Rainbow\Configuration\RainbowConfigFactory.cs" />
@@ -148,6 +157,21 @@
     <Compile Include="Rainbow\RoleFileSystemDataItem.cs" />
     <Compile Include="SerializationProvider.cs" />
     <Compile Include="Rainbow\UserFileSystemDataItem.cs" />
+    <Compile Include="DacPac\Converter.cs" />
+    <Compile Include="DacPac\SqlConverter.cs" />
+    <Compile Include="DacPac\SqlGenerator.cs" />
+    <Compile Include="DacPac\SqlGeneratorBase.cs" />
+    <Compile Include="DacPac\SqlWriter.cs" />
+    <Compile Include="DacPac\FileSystemProvider.cs" />
+    <Compile Include="DacPac\IFileSystemProvider.cs" />
+    <Compile Include="DacPac\ISqlWriter.cs" />
+    <Compile Include="DacPac\ISqlGenerator.cs" />
+    <Compile Include="DacPac\Model\Blob.cs" />
+    <Compile Include="DacPac\Model\Field.cs" />
+    <Compile Include="DacPac\Model\FieldType.cs" />
+    <Compile Include="DacPac\Model\Item.cs" />
+    <Compile Include="DacPac\Model\PackageFile.cs" />
+    <Compile Include="DacPac\Model\Role.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -173,12 +197,19 @@
     <None Include="App_Config\Include\Unicorn\Unicorn.Users.DataProvider.config" />
     <None Include="App_Config\Include\Unicorn\Unicorn.zSharedSecret.config.example" />
     <None Include="packages.config" />
+    <None Include="Resources\empty_dacpac.dacpac" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sitecore.Courier.PackageInstallPostProcessor\Sitecore.Courier.PackageInstallPostProcessor.csproj">
       <Project>{e011446d-e66f-46ad-852f-b204ee6cf85a}</Project>
       <Name>Sitecore.Courier.PackageInstallPostProcessor</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

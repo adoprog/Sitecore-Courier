@@ -5,6 +5,8 @@ using Sitecore.Courier.Rainbow;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Sitecore.Courier.DacPac;
+using Sitecore.Courier.Sql;
 using Sitecore.Update.Interfaces;
 
 namespace Sitecore.Courier.Runner
@@ -36,6 +38,7 @@ namespace Sitecore.Courier.Runner
                 Console.WriteLine("Configuration: {0}", options.Configuration);
                 Console.WriteLine("Ensure Revision: {0}", options.EnsureRevision);
                 Console.WriteLine("Path to project file: {0}", options.ScProjFilePath);
+                Console.WriteLine("DacPac Output: {0}", options.DacPac);
 
                 string version = Guid.NewGuid().ToString();
                 SanitizeOptions(options);
@@ -69,7 +72,22 @@ namespace Sitecore.Courier.Runner
                     diff.Version = version;
                 }
 
-                PackageGenerator.GeneratePackage(diff, string.Empty, options.Output);
+                if (options.DacPac)
+                {
+                  SqlConverter c = new SqlConverter();
+                  c.ConvertPackage(diff, options.Output);
+
+                  var builder = new DacPacBuilder();
+                  DirectoryInfo d = new DirectoryInfo(options.Output);
+                  foreach (var file in d.GetFiles("*.sql"))
+                  {
+                    builder.ConvertToDacPac(file.FullName, Path.Combine(file.DirectoryName, $"{file.Name}.dacpac"));
+                  }
+                }
+                else
+                {
+                  PackageGenerator.GeneratePackage(diff, string.Empty, options.Output);
+                }
             }
             else
             {

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using ConsoleApp1;
 using Rainbow.Storage.Yaml;
+using Sitecore.Courier.DacPac;
 using Sitecore.Courier.Rainbow;
 using Sitecore.Courier.Rainbow.Configuration;
 using Unicorn.Roles.Data;

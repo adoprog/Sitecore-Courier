@@ -104,7 +104,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DacPacBuilder.cs" />
     <Compile Include="NewCourierPackageCommand.cs" />
     <Compile Include="NewRainbowSecurityScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
