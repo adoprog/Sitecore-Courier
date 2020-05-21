@@ -81,7 +81,7 @@ namespace Sitecore.Courier.Runner
                   DirectoryInfo d = new DirectoryInfo(options.Output);
                   foreach (var file in d.GetFiles("*.sql"))
                   {
-                    builder.ConvertToDacPac(file.FullName, Path.Combine(file.DirectoryName, $"{file.Name}.dacpac"));
+                    builder.ConvertToDacPac(file.FullName, Path.Combine(file.DirectoryName, $"{Path.GetFileNameWithoutExtension(file.Name)}.dacpac"));
                   }
                 }
                 else
