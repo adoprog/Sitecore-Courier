@@ -39,6 +39,9 @@ namespace Sitecore.Courier.Runner
                 Console.WriteLine("Ensure Revision: {0}", options.EnsureRevision);
                 Console.WriteLine("Path to project file: {0}", options.ScProjFilePath);
                 Console.WriteLine("DacPac Output: {0}", options.DacPac);
+                Console.WriteLine("Disabled Add Operations: {0}", options.DisableAddOperations);
+                Console.WriteLine("Disabled Delete Operations: {0}", options.DisableDeleteOperations);
+                Console.WriteLine("Disabled Update Operations: {0}", options.DisableUpdateOperations);
 
                 string version = Guid.NewGuid().ToString();
                 SanitizeOptions(options);
@@ -55,6 +58,10 @@ namespace Sitecore.Courier.Runner
                 RainbowSerializationProvider.IncludeFiles = options.IncludeFiles;
                 RainbowSerializationProvider.EnsureRevision = options.EnsureRevision;
 
+                DiffGenerator.AllowedOperations &= options.DisableAddOperations ? ~AllowedOperations.Create : DiffGenerator.AllowedOperations;
+                DiffGenerator.AllowedOperations &= options.DisableDeleteOperations ? ~AllowedOperations.Delete : DiffGenerator.AllowedOperations;
+                DiffGenerator.AllowedOperations &= options.DisableUpdateOperations ? ~AllowedOperations.Update : DiffGenerator.AllowedOperations;
+                
                 var commands = DiffGenerator.GetDiffCommands(options.Source, options.Target, options.IncludeSecurity, version, options.CollisionBehavior);
 
                 var diff = new DiffInfo(

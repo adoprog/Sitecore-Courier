@@ -33,6 +33,30 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             Assert.AreEqual(1, commands.Count);
             Assert.AreEqual(1, commands.Count(x => x is DeleteItemCommand));
         }
+        
+        [Test]
+        public void DeleteItemsTest_GivenDisabledDeleteOperations_NotGenerateDeleteItemCommand()
+        {
+            // Arrange
+            var sourceItems = new List<IDataItem>();
+            var sourceItem = new QuickContentDataItem(string.Empty, string.Empty, string.Empty, new SyncItem());
+            sourceItems.Add(sourceItem);
+
+            var targetItems = new List<IDataItem>();
+            var sourceDataIterator = new TestDataIterator(sourceItems);
+            var targetDataIterator = new TestDataIterator(targetItems);
+
+            var engineMock = new Mock<DataEngine>(null, null, new List<ICommandFilter>());
+
+            DiffGenerator.AllowedOperations = AllowedOperations.Create | AllowedOperations.Update;
+            
+            // Act
+            var commands = DiffGenerator.GetCommands(sourceDataIterator, targetDataIterator);
+
+            //Assert
+            Assert.AreEqual(0, commands.Count);
+            Assert.AreEqual(0, commands.Count(x => x is DeleteItemCommand));
+        }
 
         [Test]
         public void AddItemsTest()

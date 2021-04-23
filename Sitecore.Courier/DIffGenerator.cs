@@ -17,6 +17,7 @@ namespace Sitecore.Courier
     {
         public static bool IncludeSecurity { get; set; }
         public static string Version { get; set; }
+        public static AllowedOperations AllowedOperations { get; set; } = AllowedOperations.Create | AllowedOperations.Delete | AllowedOperations.Update;
 
         public static List<ICommand> GetDiffCommands(string sourcePath, string targetPath, bool includeSecurity, string version, CollisionBehavior collisionBehavior = CollisionBehavior.Undefined)
         {
@@ -59,20 +60,23 @@ namespace Sitecore.Courier
             //Iterate through all source items and match them in target. If there's a match, update it and remove from target. Else delete
             foreach (var old in source)
             {
-                if (target.ContainsKey(old.Key))
+                if (AllowedOperations.HasFlag(AllowedOperations.Update) &&  target.ContainsKey(old.Key))
                 {
                     commands.AddRange(old.Value.GenerateUpdateCommand(target[old.Key]));
                     target.Remove(old.Key);
                 }
-                else
+                else if(AllowedOperations.HasFlag(AllowedOperations.Delete))
                 {
                     commands.AddRange(old.Value.GenerateDeleteCommand());
                 }
             }
 
             //The ones still left in target will be the ones that did not compare to any item in source, create add commands
-            commands.AddRange(target.Values.SelectMany(t => t.GenerateAddCommand()));
-
+            if (AllowedOperations.HasFlag(AllowedOperations.Create))
+            {
+                commands.AddRange(target.Values.SelectMany(t => t.GenerateAddCommand()));
+            }
+            
             return commands;
         }
 

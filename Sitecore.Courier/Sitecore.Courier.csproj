@@ -130,6 +130,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllowedOperations.cs" />
     <Compile Include="DacPac\DacPacBuilder.cs" />
     <Compile Include="DiffGenerator.cs" />
     <Compile Include="Iterators\EmptyIterator.cs" />
