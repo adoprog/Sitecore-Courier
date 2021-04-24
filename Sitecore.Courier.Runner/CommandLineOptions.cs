@@ -5,7 +5,7 @@ using Sitecore.Update;
 namespace Sitecore.Courier.Runner
 {
     // Define a class to receive parsed values
-    class Options
+    public class Options
     {
         [Option('s', "source", Required = false,
           HelpText = "Source files")]
@@ -53,6 +53,19 @@ namespace Sitecore.Courier.Runner
 
         [ParserState]
         public IParserState LastParserState { get; set; }
+
+        
+        [Option('a', "addoperations", Required = false,
+            HelpText = "Disable add operations")]
+        public bool DisableAddOperations { get; set; }
+        
+        [Option('d', "deleteoperations", Required = false,
+            HelpText = "Disable delete operations")]
+        public bool DisableDeleteOperations { get; set; }
+        
+        [Option('u', "updateoperations", Required = false,
+            HelpText = "Disable update operations")]
+        public bool DisableUpdateOperations { get; set; }
 
         [HelpOption]
         public string GetUsage()

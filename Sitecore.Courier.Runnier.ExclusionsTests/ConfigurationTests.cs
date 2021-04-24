@@ -114,5 +114,81 @@ namespace Sitecore.Courier.Runner.ExclusionsTests
             var exclusions = ExclusionHandler.GetExcludedItems(xmlPath, configuration);
             Assert.False(exclusions.Any());
         }
+        
+        [Test]
+        public void DiffGeneratorOperationsDisabledByOptions()
+        {
+            var options = new Runner.Options
+            {
+                DisableAddOperations = true,
+                DisableDeleteOperations = true,
+                DisableUpdateOperations = true
+            };
+            
+            SetDiffGeneratorOptions(options);
+
+            Assert.IsFalse(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Create));
+            Assert.IsFalse(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Update));
+            Assert.IsFalse(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Delete));
+        }
+
+        [Test]
+        public void DiffGeneratorOperationsEnableAddByOptions()
+        {
+            var options = new Runner.Options
+            {
+                DisableAddOperations = false,
+                DisableDeleteOperations = true,
+                DisableUpdateOperations = true
+            };
+            
+            SetDiffGeneratorOptions(options);
+            
+            Assert.IsTrue(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Create));
+            Assert.IsFalse(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Update));
+            Assert.IsFalse(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Delete));
+        }
+        
+        [Test]
+        public void DiffGeneratorOperationsEnableAddAndDeleteByOptions()
+        {
+            var options = new Runner.Options
+            {
+                DisableAddOperations = false,
+                DisableDeleteOperations = false,
+                DisableUpdateOperations = true
+            };
+            
+            SetDiffGeneratorOptions(options);
+            
+            Assert.IsTrue(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Create));
+            Assert.IsTrue(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Delete));
+            Assert.IsFalse(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Update));
+        }
+        
+        [Test]
+        public void DiffGeneratorOperationsEnableAllByOptions()
+        {
+            var options = new Runner.Options
+            {
+                DisableAddOperations = false,
+                DisableDeleteOperations = false,
+                DisableUpdateOperations = false
+            };
+            
+            SetDiffGeneratorOptions(options);
+            
+            Assert.IsTrue(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Create));
+            Assert.IsTrue(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Update));
+            Assert.IsTrue(DiffGenerator.AllowedOperations.HasFlag(AllowedOperations.Delete));
+        }
+        
+        private static void SetDiffGeneratorOptions(Runner.Options options)
+        {
+            DiffGenerator.AllowedOperations = AllowedOperations.Create | AllowedOperations.Delete | AllowedOperations.Update;
+            DiffGenerator.AllowedOperations &= options.DisableAddOperations ? ~AllowedOperations.Create : DiffGenerator.AllowedOperations;
+            DiffGenerator.AllowedOperations &= options.DisableDeleteOperations ? ~AllowedOperations.Delete : DiffGenerator.AllowedOperations;
+            DiffGenerator.AllowedOperations &= options.DisableUpdateOperations ? ~AllowedOperations.Update : DiffGenerator.AllowedOperations;
+        }
     }
 }
